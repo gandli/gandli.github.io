@@ -1,0 +1,19 @@
+# themes
+[submodule "themes/meme"]
+	path = themes/meme
+	url = https://github.com/reuixiy/hugo-theme-meme.git
+[submodule "themes/ananke"]
+	path = themes/ananke
+	url = https://github.com/theNewDynamic/gohugo-theme-ananke.git
+[submodule "themes/DoIt"]
+	path = themes/DoIt
+	url = https://github.com/HEIGE-PCloud/DoIt.git
+[submodule "themes/cactus"]
+	path = themes/cactus
+	url = https://github.com/monkeyWzr/hugo-theme-cactus.git
+[submodule "hemes/cactus"]
+	path = hemes/cactus
+	url = https://github.com/monkeyWzr/hugo-theme-cactus.git
+[submodule "tthemes/DoIt"]
+	path = tthemes/DoIt
+	url = https://github.com/HEIGE-PCloud/DoIt.git
