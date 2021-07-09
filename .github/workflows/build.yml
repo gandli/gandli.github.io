@@ -33,7 +33,7 @@ jobs:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # Recommended for this usage
           # personal_token: ${{ secrets.PERSONAL_TOKEN }} # An alternative
           # github_token: ${{ secrets.GITHUB_TOKEN }}     # This does not work for this usage
-          # publish_dir: ./public
+          publish_dir: ./public
           # keep_files: true
           publish_branch: gh-pages
           user_name: "gandli"
