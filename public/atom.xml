@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title type="text">前端技术学习</title>
+    <subtitle type="html">MemE is a powerful and highly customizable GoHugo theme for personal blogs.</subtitle>
+    <updated>2021-06-12T20:01:29&#43;08:00</updated>
+    <id>https://gandli.github.io/</id>
+    <link rel="alternate" type="text/html" href="https://gandli.github.io/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://gandli.github.io/atom.xml" />
+    <author>
+            <name>gandli</name>
+            <uri>https://gandli.github.io/</uri>
+            
+                <email>chenxuexin@gmail.com</email>
+            </author>
+    <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights>
+    <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+        <entry>
+            <title type="text">JavaScrpit</title>
+            <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/javascrpit/" />
+            <id>https://gandli.github.io/posts/javascrpit/</id>
+            <updated>2021-06-12T20:01:12&#43;08:00</updated>
+            <published>2021-06-12T19:44:22&#43;08:00</published>
+            <author>
+                    <name>gandli</name>
+                    <uri>https://gandli.github.io/</uri>
+                    <email>chenxuexin@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">JavaScrpit JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发 Web 页面的脚本语言而出名的，但是它也被用到了很多非浏览器环境中，例如 Node.js、 Apache CouchDB 和 Adobe Acrobat。JavaScript 是一种基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</summary>
+            
+                <content type="html">&lt;h1 id=&#34;javascrpit&#34;&gt;JavaScrpit&lt;/h1&gt;
+&lt;p&gt;JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发 Web 页面的脚本语言而出名的，但是它也被用到了很多非浏览器环境中，例如 Node.js、 Apache CouchDB 和 Adobe Acrobat。JavaScript 是一种基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">你好，世界</title>
+            <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/hello-world/" />
+            <id>https://gandli.github.io/posts/hello-world/</id>
+            <updated>2021-06-12T20:01:27&#43;08:00</updated>
+            <published>2021-06-12T16:21:50&#43;08:00</published>
+            <author>
+                    <name>gandli</name>
+                    <uri>https://gandli.github.io/</uri>
+                    <email>chenxuexin@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">你好，世界！</summary>
+            
+                <content type="html">&lt;h1 id=&#34;你好世界&#34;&gt;你好，世界！&lt;/h1&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/%E7%AC%AC%E4%B8%80%E7%AF%87/" term="第一篇" label="第一篇" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/%E4%BD%A0%E5%A5%BD/" term="你好" label="你好" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/%E7%AC%AC%E4%B8%80%E7%AF%87/" term="第一篇" label="第一篇" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/%E4%BD%A0%E5%A5%BD/" term="你好" label="你好" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+</feed>

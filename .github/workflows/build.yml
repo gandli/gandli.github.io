@@ -1,0 +1,53 @@
+# .github/workflows/build.yml
+name: github pages
+
+on:
+  push:
+    branches:
+      - main # Set a branch name to trigger deployment
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.83.1"
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }} # Recommended for this usage
+          # personal_token: ${{ secrets.PERSONAL_TOKEN }} # An alternative
+          # github_token: ${{ secrets.GITHUB_TOKEN }}     # This does not work for this usage
+          # publish_dir: ./public
+          # keep_files: true
+          publish_branch: gh-pages
+          user_name: "gandli"
+          user_email: "gandli@qq.com"
+          commit_message: ${{ github.event.head_commit.message }}
+          cname: gandli.github.com
+          allow_empty_commit: true
+
+      # Runs a single command using the runners shell
+      - name: Install Deps
+        run: |
+          sudo npm install -g @cloudbase/cli@latest
+      - name: Login
+        run: tcb login --apiKeyId  ${{ secrets.SECRETID }} --apiKey ${{ secrets.SECRETKEY }}
+
+      # Runs a set of commands using the runners shell
+      - name: Deploy to tcb hosting
+        run: |
+          tcb hosting:deploy public/ -e ${{ secrets.ENVID }}
