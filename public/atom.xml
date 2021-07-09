@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">前端技术学习</title>
     <subtitle type="html">MemE is a powerful and highly customizable GoHugo theme for personal blogs.</subtitle>
-    <updated>2021-06-12T20:01:29&#43;08:00</updated>
+    <updated>2021-07-09T15:59:26&#43;08:00</updated>
     <id>https://gandli.github.io/</id>
     <link rel="alternate" type="text/html" href="https://gandli.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://gandli.github.io/atom.xml" />
@@ -15,21 +15,135 @@
                 <email>chenxuexin@gmail.com</email>
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights>
-    <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+    <generator uri="https://gohugo.io/" version="0.85.0">Hugo</generator>
+        <entry>
+            <title type="text">Taro</title>
+            <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/taro/" />
+            <id>https://gandli.github.io/posts/taro/</id>
+            <updated>2021-07-09T15:21:23&#43;08:00</updated>
+            <published>2021-06-17T10:16:11&#43;08:00</published>
+            <author>
+                    <name>gandli</name>
+                    <uri>https://gandli.github.io/</uri>
+                    <email>chenxuexin@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Taro 是一个开放式跨端跨框架解决方案，支持使用 React/Vue/Nerv 等框架来开发微信/京东/百度/支付宝/字节跳动/ QQ 小程序/H5 等应用。</summary>
+            
+                <content type="html">&lt;h1 id=&#34;taro&#34;&gt;Taro&lt;/h1&gt;
+&lt;p&gt;Taro 是一个开放式跨端跨框架解决方案，支持使用 React/Vue/Nerv 等框架来开发微信/京东/百度/支付宝/字节跳动/ QQ 小程序/H5 等应用。现如今市面上端的形态多种多样，Web、React Native、微信小程序等各种端大行其道，当业务要求同时在不同的端都要求有所表现的时候，针对不同的端去编写多套代码的成本显然非常高，这时候只编写一套代码就能够适配到多端的能力就显得极为需要。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/taro/" term="Taro" label="Taro" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/taro/" term="Taro" label="Taro" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Vue.js</title>
+            <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/vue/" />
+            <id>https://gandli.github.io/posts/vue/</id>
+            <updated>2021-07-09T15:21:23&#43;08:00</updated>
+            <published>2021-06-15T20:01:20&#43;08:00</published>
+            <author>
+                    <name>gandli</name>
+                    <uri>https://gandli.github.io/</uri>
+                    <email>chenxuexin@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。</summary>
+            
+                <content type="html">&lt;h1 id=&#34;vuejshttpsv3cnvuejsorg&#34;&gt;&lt;a href=&#34;https://v3.cn.vuejs.org/&#34;&gt;vue.js&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/categories/vue/" term="Vue" label="Vue" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/javascrpit/" term="JavaScrpit" label="JavaScrpit" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://gandli.github.io/tags/vue/" term="Vue" label="Vue" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">JavaScrpit</title>
             <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/javascrpit/" />
             <id>https://gandli.github.io/posts/javascrpit/</id>
-            <updated>2021-06-12T20:01:12&#43;08:00</updated>
+            <updated>2021-07-09T15:21:23&#43;08:00</updated>
             <published>2021-06-12T19:44:22&#43;08:00</published>
             <author>
                     <name>gandli</name>
                     <uri>https://gandli.github.io/</uri>
                     <email>chenxuexin@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">JavaScrpit JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发 Web 页面的脚本语言而出名的，但是它也被用到了很多非浏览器环境中，例如 Node.js、 Apache CouchDB 和 Adobe Acrobat。JavaScript 是一种基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)</rights><summary type="html">JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。</summary>
             
-                <content type="html">&lt;h1 id=&#34;javascrpit&#34;&gt;JavaScrpit&lt;/h1&gt;
+                <content type="html">&lt;h1 id=&#34;javascrpithttpsdevelopermozillaorgzh-cndocswebjavascript&#34;&gt;&lt;a href=&#34;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript&#34;&gt;JavaScrpit&lt;/a&gt;&lt;/h1&gt;
 &lt;p&gt;JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发 Web 页面的脚本语言而出名的，但是它也被用到了很多非浏览器环境中，例如 Node.js、 Apache CouchDB 和 Adobe Acrobat。JavaScript 是一种基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。&lt;/p&gt;
 </content>
             
@@ -65,7 +179,7 @@
             <title type="text">你好，世界</title>
             <link rel="alternate" type="text/html" href="https://gandli.github.io/posts/hello-world/" />
             <id>https://gandli.github.io/posts/hello-world/</id>
-            <updated>2021-06-12T20:01:27&#43;08:00</updated>
+            <updated>2021-07-09T15:21:23&#43;08:00</updated>
             <published>2021-06-12T16:21:50&#43;08:00</published>
             <author>
                     <name>gandli</name>
