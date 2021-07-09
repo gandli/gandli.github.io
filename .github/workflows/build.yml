@@ -39,7 +39,7 @@ jobs:
           user_name: "gandli"
           user_email: "gandli@qq.com"
           commit_message: ${{ github.event.head_commit.message }}
-          cname: gandli.github.com
+          cname: github.com
           allow_empty_commit: true
 
       # Runs a single command using the runners shell
