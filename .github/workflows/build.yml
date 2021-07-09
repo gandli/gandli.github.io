@@ -52,4 +52,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Deploy to tcb hosting
         run: |
-          tcb hosting:deploy public/ -e ${{ secrets.ENVID }}
+          tcb hosting deploy public/ -e ${{ secrets.ENVID }}
