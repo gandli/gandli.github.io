@@ -30,9 +30,9 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # Recommended for this usage
-          # personal_token: ${{ secrets.PERSONAL_TOKEN }} # An alternative
-          # github_token: ${{ secrets.GITHUB_TOKEN }}     # This does not work for this usage
+          # deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           # keep_files: true
           publish_branch: gh-pages
