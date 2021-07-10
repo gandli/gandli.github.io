@@ -1,8 +1,8 @@
-baseURL = "https://example.com"
+baseURL = "https://gandli.github.io"
 languageCode = "en-us"
-title = "Cactus theme example"
+title = "gandli"
 theme = "cactus"
-copyright = "You" # cactus will use title if copyright is not set
+copyright = "gandli" # cactus will use title if copyright is not set
 disqusShortname = "example" # Used when comments is enabled. Cactus will use site title if not set
 # googleAnalytics = "UA-1234-5"
 
