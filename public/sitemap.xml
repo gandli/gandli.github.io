@@ -2,172 +2,168 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/</loc>
+    <loc>/categories/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/</loc>
+    <loc>/posts/code-block-test/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/code-block-test/</loc>
+    <loc>/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/tech/</loc>
+    <loc>/categories/tech/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/test/</loc>
+    <loc>/tags/test/</loc>
     <lastmod>2021-06-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/javascrpit/</loc>
+    <loc>/tags/javascrpit/</loc>
     <lastmod>2021-06-17T10:16:11+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/javascrpit/</loc>
+    <loc>/categories/javascrpit/</loc>
     <lastmod>2021-06-17T10:16:11+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/taro/</loc>
+    <loc>/tags/taro/</loc>
     <lastmod>2021-06-17T10:16:11+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/taro/</loc>
+    <loc>/categories/taro/</loc>
     <lastmod>2021-06-17T10:16:11+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/taro/</loc>
+    <loc>/posts/taro/</loc>
     <lastmod>2021-06-17T10:16:11+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/vue/</loc>
+    <loc>/tags/vue/</loc>
     <lastmod>2021-06-15T20:01:20+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/vue/</loc>
+    <loc>/categories/vue/</loc>
     <lastmod>2021-06-15T20:01:20+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/vue/</loc>
+    <loc>/posts/vue/</loc>
     <lastmod>2021-06-15T20:01:20+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/javascrpit/</loc>
+    <loc>/posts/javascrpit/</loc>
     <lastmod>2021-06-12T19:44:22+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/%E4%BD%A0%E5%A5%BD/</loc>
+    <loc>/tags/%E4%BD%A0%E5%A5%BD/</loc>
     <lastmod>2021-06-12T16:21:50+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/%E4%BD%A0%E5%A5%BD/</loc>
+    <loc>/categories/%E4%BD%A0%E5%A5%BD/</loc>
     <lastmod>2021-06-12T16:21:50+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/hello-world/</loc>
+    <loc>/posts/hello-world/</loc>
     <lastmod>2021-06-12T16:21:50+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/%E7%AC%AC%E4%B8%80%E7%AF%87/</loc>
+    <loc>/tags/%E7%AC%AC%E4%B8%80%E7%AF%87/</loc>
     <lastmod>2021-06-12T16:21:50+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/%E7%AC%AC%E4%B8%80%E7%AF%87/</loc>
+    <loc>/categories/%E7%AC%AC%E4%B8%80%E7%AF%87/</loc>
     <lastmod>2021-06-12T16:21:50+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/algorithms/</loc>
+    <loc>/tags/algorithms/</loc>
     <lastmod>2020-06-06T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2020-06-06-changes-in-java-string/</loc>
+    <loc>/posts/2020-06-06-changes-in-java-string/</loc>
     <lastmod>2020-06-06T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/notes/</loc>
+    <loc>/categories/notes/</loc>
     <lastmod>2020-06-06T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2020-05-01-algorithms-graphs/</loc>
+    <loc>/posts/2020-05-01-algorithms-graphs/</loc>
     <lastmod>2020-05-01T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/programming-language/</loc>
+    <loc>/tags/programming-language/</loc>
     <lastmod>2020-04-29T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2020-04-29-subtyping/</loc>
+    <loc>/posts/2020-04-29-subtyping/</loc>
     <lastmod>2020-04-29T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/racket/</loc>
+    <loc>/tags/racket/</loc>
     <lastmod>2020-02-29T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2020-02-29-racket/</loc>
+    <loc>/posts/2020-02-29-racket/</loc>
     <lastmod>2020-02-29T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/sml/</loc>
+    <loc>/tags/sml/</loc>
     <lastmod>2019-12-30T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-12-30-standardml-notes/</loc>
+    <loc>/posts/2019-12-30-standardml-notes/</loc>
     <lastmod>2019-12-30T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/rpa/</loc>
+    <loc>/tags/rpa/</loc>
     <lastmod>2019-11-23T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-11-23-uipath-orchestrator/</loc>
+    <loc>/posts/2019-11-23-uipath-orchestrator/</loc>
     <lastmod>2019-11-23T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-11-18-uipath-best-practice/</loc>
+    <loc>/posts/2019-11-18-uipath-best-practice/</loc>
     <lastmod>2019-11-18T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/javascript/</loc>
+    <loc>/tags/javascript/</loc>
     <lastmod>2019-11-10T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-11-10-encodeuricomponent/</loc>
+    <loc>/posts/2019-11-10-encodeuricomponent/</loc>
     <lastmod>2019-11-10T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-10-27-uipath/</loc>
+    <loc>/posts/2019-10-27-uipath/</loc>
     <lastmod>2019-10-27T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-03-28-javascript-comparison/</loc>
+    <loc>/posts/2019-03-28-javascript-comparison/</loc>
     <lastmod>2019-03-28T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-03-22-js-tips/</loc>
+    <loc>/posts/2019-03-22-js-tips/</loc>
     <lastmod>2019-03-22T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-03-08-es6-bind-trick/</loc>
+    <loc>/posts/2019-03-08-es6-bind-trick/</loc>
     <lastmod>2019-03-08T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-03-08-object-assign-with-accessor-descriptor/</loc>
+    <loc>/posts/2019-03-08-object-assign-with-accessor-descriptor/</loc>
     <lastmod>2019-03-08T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/vue.js/</loc>
+    <loc>/tags/vue.js/</loc>
     <lastmod>2019-01-25T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-01-19-vue-navigation-guards/</loc>
+    <loc>/posts/2019-01-19-vue-navigation-guards/</loc>
     <lastmod>2019-01-25T09:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2019-01-18-es6/</loc>
+    <loc>/posts/2019-01-18-es6/</loc>
     <lastmod>2019-01-18T16:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2017-02-18-hash/</loc>
+    <loc>/posts/2017-02-18-hash/</loc>
     <lastmod>2017-02-18T19:19:01+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/php/</loc>
+    <loc>/tags/php/</loc>
     <lastmod>2017-01-11T18:39:17+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2017-01-11-php-lambada/</loc>
+    <loc>/posts/2017-01-11-php-lambada/</loc>
     <lastmod>2017-01-11T18:39:17+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/ruby/</loc>
+    <loc>/tags/ruby/</loc>
     <lastmod>2016-12-08T22:54:49+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2016-12-08-ruby-notes/</loc>
+    <loc>/posts/2016-12-08-ruby-notes/</loc>
     <lastmod>2016-12-08T22:54:49+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/linux/</loc>
+    <loc>/tags/linux/</loc>
     <lastmod>2016-11-29T21:08:52+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2016-11-29-iptables-usage/</loc>
+    <loc>/posts/2016-11-29-iptables-usage/</loc>
     <lastmod>2016-11-29T21:08:52+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2016-11-05-php-composer-autoload/</loc>
+    <loc>/posts/2016-11-05-php-composer-autoload/</loc>
     <lastmod>2016-11-05T02:42:06+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/life/</loc>
+    <loc>/categories/life/</loc>
     <lastmod>2016-10-22T16:56:54+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/2016-10-22-z/</loc>
+    <loc>/posts/2016-10-22-z/</loc>
     <lastmod>2016-10-22T16:56:54+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/about/</loc>
-    <lastmod>2016-08-24T17:51:42+00:00</lastmod>
-  </url><url>
-    <loc>https://example.com/about/</loc>
-    <lastmod>2016-08-24T17:51:42+00:00</lastmod>
+    <loc>/about/</loc>
   </url>
 </urlset>
