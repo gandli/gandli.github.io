@@ -11,3 +11,4 @@ hugo.linux
 
 # OSX
 .DS_Store
+my.secrets
