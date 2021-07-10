@@ -1,4 +1,4 @@
-baseURL = "https://gandli.github.io"
+baseURL = ""
 languageCode = "en-us"
 title = "gandli"
 theme = "cactus"
