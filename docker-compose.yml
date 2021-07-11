@@ -1,0 +1,12 @@
+# 这里也有坑，version 是和你的 docker-compose版本有关的，如果报错就试试改成 3 或者 3.1
+# 打包后存放的文件夹，我的叫dist！！！ 别忘了修改成自己的
+version: '2'
+services:
+  nginx:
+    restart: always
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d
+      - ./gandli.github.io/public/:/var/www/html/
