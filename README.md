@@ -1,5 +1,7 @@
 # gandli.github.io [![github pages](https://github.com/gandli/gandli.github.io/actions/workflows/build.yml/badge.svg)](https://github.com/gandli/gandli.github.io/actions/workflows/build.yml)
 
+# hugo thme
+
 ```
 git submodule add --depth 1 https://github.com/reuixiy/hugo-theme-meme.git themes/meme
 git submodule add --depth 1 https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
