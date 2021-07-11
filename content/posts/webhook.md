@@ -62,8 +62,8 @@ const handler = createHandler({
   secret: 'webhook', // 你的密码
 });
 
-// ?? 注意要在阿里云安全组里面添加开放端口
-// ?? 还要在ubuntu防火墙关闭对应端口
+// 注意要在阿里云安全组里面添加开放端口
+// 还要在ubuntu防火墙关闭对应端口
 http
   .createServer((req, res) => {
     handler(req, res, (err) => {
