@@ -11,5 +11,6 @@ hugo.linux
 
 # OSX
 .DS_Store
-my.secrets
-my.env
+
+# node
+node_modules
