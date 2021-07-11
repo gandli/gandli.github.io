@@ -135,8 +135,8 @@ docker-compose up -d --force-recreate --build
 </span><span style=color:#6272a4></span>  secret<span style=color:#ff79c6>:</span> <span style=color:#f1fa8c>&#39;webhook&#39;</span>, <span style=color:#6272a4>// 你的密码
 </span><span style=color:#6272a4></span>});
 
-<span style=color:#6272a4>// ?? 注意要在阿里云安全组里面添加开放端口
-</span><span style=color:#6272a4>// ?? 还要在ubuntu防火墙关闭对应端口
+<span style=color:#6272a4>// 注意要在阿里云安全组里面添加开放端口
+</span><span style=color:#6272a4>// 还要在ubuntu防火墙关闭对应端口
 </span><span style=color:#6272a4></span>http
   .createServer((req, res) =&gt; {
     handler(req, res, (err) =&gt; {
