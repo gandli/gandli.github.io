@@ -87,8 +87,8 @@ handler.on('push', function (event) {
     event.payload.ref
   );
   // 分支判断
-  if (event.payload.ref === 'refs/heads/master') {
-    console.log('deploy master..');
+  if (event.payload.ref === 'refs/heads/gh-pages') {
+    console.log('deploy gh-pages ...');
     run_cmd('sh', ['./autoDeploy.sh'], function (text) {
       console.log(text);
     });
