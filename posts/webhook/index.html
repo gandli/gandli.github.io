@@ -160,8 +160,8 @@ handler.on(<span style=color:#f1fa8c>&#39;error&#39;</span>, (err) =&gt; {
     event.payload.ref
   );
   <span style=color:#6272a4>// 分支判断
-</span><span style=color:#6272a4></span>  <span style=color:#ff79c6>if</span> (event.payload.ref <span style=color:#ff79c6>===</span> <span style=color:#f1fa8c>&#39;refs/heads/master&#39;</span>) {
-    console.log(<span style=color:#f1fa8c>&#39;deploy master..&#39;</span>);
+</span><span style=color:#6272a4></span>  <span style=color:#ff79c6>if</span> (event.payload.ref <span style=color:#ff79c6>===</span> <span style=color:#f1fa8c>&#39;refs/heads/gh-pages&#39;</span>) {
+    console.log(<span style=color:#f1fa8c>&#39;deploy gh-pages ...&#39;</span>);
     run_cmd(<span style=color:#f1fa8c>&#39;sh&#39;</span>, [<span style=color:#f1fa8c>&#39;./autoDeploy.sh&#39;</span>], <span style=color:#8be9fd;font-style:italic>function</span> (text) {
       console.log(text);
     });
