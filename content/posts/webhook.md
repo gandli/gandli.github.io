@@ -10,7 +10,7 @@ draft: false
 # autoDeploy.sh
 #!/bin/bash
 # deploy-dev.sh
-echo Deploy Project # 获取最新版代码
+echo pull # 获取最新版代码
 
 # 拉取代码
 cd html
@@ -52,7 +52,7 @@ function run_cmd(cmd, args, callback) {
     resp += buffer.toString();
   });
   child.stdout.on('end', function () {
-    console.log('Deploy 完成');
+    // console.log('Deploy 完成');
     callback(resp);
   });
 }
@@ -88,7 +88,7 @@ handler.on('push', function (event) {
   );
   // 分支判断
   if (event.payload.ref === 'refs/heads/gh-pages') {
-    console.log('deploy gh-pages ...');
+    // console.log('deploy gh-pages ...');
     run_cmd('sh', ['./autoDeploy.sh'], function (text) {
       console.log(text);
     });
