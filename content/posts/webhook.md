@@ -39,6 +39,18 @@ services:
       - ./html/:/var/www/html/
 ```
 
+```conf
+# nginx/conf/docker.conf
+# 80端口是 Nginx 容器的，后面会做映射
+server {
+listen 80;
+location / {
+root /var/www/html;
+index index.html index.htm;
+}
+}
+```
+
 ```javascript
 // webhook.js
 const http = require('http');
