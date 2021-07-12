@@ -11,6 +11,8 @@ categories:
 
 # [Docker🐳+Nginx+WebHook+Node 一键自动化持续部署](https://juejin.cn/post/6844904080595238919)
 
+## autoDeploy.sh
+
 ```bash
 # autoDeploy.sh
 #!/bin/bash
@@ -28,6 +30,8 @@ docker-compose down
 docker-compose up -d --force-recreate --build
 ```
 
+## docker-compose.yml
+
 ```yml
 # docker-compose.yml
 # 这里也有坑，version 是和你的 docker-compose版本有关的，如果报错就试试改成 3 或者 3.1
@@ -44,6 +48,8 @@ services:
       - ./html/:/var/www/html/
 ```
 
+## nginx/conf/docker.conf
+
 ```conf
 # nginx/conf/docker.conf
 # 80端口是 Nginx 容器的，后面会做映射
@@ -55,6 +61,8 @@ index index.html index.htm;
 }
 }
 ```
+
+## webhook.js
 
 ```javascript
 // webhook.js
