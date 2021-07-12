@@ -2,6 +2,13 @@
 title: 'Webhook'
 date: 2021-07-11T15:32:04+08:00
 draft: false
+description: Webhook 就是一个接收 HTTP POST（或GET，PUT，DELETE）的URL，一个实现了 Webhook 的 API 提供商就是在当事件发生的时候会向这个配置好的 URL 发送一条信息，与请求-响应式不同，使用 Webhook 你可以实时接受到变化。
+tags:
+  - JavaScript
+  - Vue
+categories:
+  - JavaScript
+  - Vue
 ---
 
 # [Docker🐳+Nginx+WebHook+Node 一键自动化持续部署](https://juejin.cn/post/6844904080595238919)

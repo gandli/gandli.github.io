@@ -2,23 +2,26 @@
 title: VueのNavigation Guards
 date: 2019-01-25 09:00:00
 tags:
-    - JavaScript
-    - Vue.js
+  - JavaScript
+  - Vue.js
 category: tech
 keywords:
-    - Vue.js
-    - Javascript
-    - ES2015
-    - ES6
+  - Vue.js
+  - Javascript
+  - ES2015
+  - ES6
+draft: true
 ---
 
 Navigation guards are provided by `vue-router`.
 Three ways to hook:
-* globally
-* per-route
-* in-component
 
-__NOTE:__ 
+- globally
+- per-route
+- in-component
+
+**NOTE:**
+
 1. Params or query changes won't trigger enter/leave navigation guards. You can either watch the `$route` object to react to those changes, or use the `beforeRouteUpdate` in-component guard.
 2. Make sure to always call the next function, otherwise the hook will never be resolved.
 
@@ -70,7 +73,7 @@ const Foo = {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    // However, you can access the instance by passing a callback to next. 
+    // However, you can access the instance by passing a callback to next.
     // The callback will be called when the navigation is confirmed
     // and the component instance will be passed to the callback as the argument
     beforeRouteEnter (to, from, next) {
@@ -97,15 +100,15 @@ const Foo = {
 
 ## Resolve flow
 
-+ Navigation triggered.
-+ Call leave guards in deactivated components.
-+ Call global beforeEach guards.
-+ Call beforeRouteUpdate guards in reused components.
-+ Call beforeEnter in route configs.
-+ Resolve async route components.
-+ Call beforeRouteEnter in activated components.
-+ Call global beforeResolve guards.
-+ Navigation confirmed.
-+ Call global afterEach hooks.
-+ DOM updates triggered.
-+ Call callbacks passed to next in beforeRouteEnter guards with instantiated instances.
+- Navigation triggered.
+- Call leave guards in deactivated components.
+- Call global beforeEach guards.
+- Call beforeRouteUpdate guards in reused components.
+- Call beforeEnter in route configs.
+- Resolve async route components.
+- Call beforeRouteEnter in activated components.
+- Call global beforeResolve guards.
+- Navigation confirmed.
+- Call global afterEach hooks.
+- DOM updates triggered.
+- Call callbacks passed to next in beforeRouteEnter guards with instantiated instances.

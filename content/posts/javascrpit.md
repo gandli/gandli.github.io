@@ -1,13 +1,13 @@
 ---
 title: 'JavaScrpit'
 date: 2021-06-12T19:44:22+08:00
-draft: false
+draft: true
 description: JavaScript ( JS ) 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。
 featured_image:
 tags:
-  - JavaScrpit
+  - JavaScript
 categories:
-  - JavaScrpit
+  - JavaScript
 ---
 
 # [JavaScrpit](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)

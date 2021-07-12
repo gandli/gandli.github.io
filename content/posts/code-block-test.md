@@ -2,14 +2,14 @@
 title: Code Block Test
 date: 2021-06-27 09:00:00
 tags:
-    - test
+  - test
 categories:
-    - tech
+  - tech
 keywords:
-    - markdown
-    - code block
+  - markdown
+  - code block
+draft: true
 ---
-
 
 `String`
 
@@ -18,7 +18,6 @@ Using indents:
     text
     text
     text
-
 
 Fenced code block:
 
@@ -98,29 +97,29 @@ public final class String
 }
 ```
 
-Using hugo's `highlight` [shortcode]([highlight](https://gohugo.io/content-management/syntax-highlighting/#highlight-shortcode)) (lineNumbersInTable = true):
+Using hugo's `highlight` [shortcode](<[highlight](https://gohugo.io/content-management/syntax-highlighting/#highlight-shortcode)>) (lineNumbersInTable = true):
 
 {{< highlight typescript "linenos=table, hl_lines=8 18-21" >}}
 // TypeScript
 type OptionalUser = {
-    [K in keyof User]?: User[K]
+[K in keyof User]?: User[K]
 }
 
 // ! we can remove optional constraint
 type RequiredUser = {
-    [K in keyof OptionalUser]-?: User[K]
+[K in keyof OptionalUser]-?: User[K]
 }
 
 type NullableUser = {
-    [K in keyof User]: User[K] | null
+[K in keyof User]: User[K] | null
 }
 type ReadonlyUser = {
-    readonly [K in keyof User]: User[K]
+readonly [K in keyof User]: User[K]
 }
 
 // ! we can remove readonly constraint
 type ModifiableUser = {
-    -readonly [K in keyof User]: User[K]
+-readonly [K in keyof User]: User[K]
 }
 {{< /highlight >}}
 
@@ -129,12 +128,12 @@ Without line number
 {{< highlight javascript "linenos=false" >}}
 (() => {
 
-  function createCopyButton(codeNode) {
-    const copyBtn = document.createElement('button')
-    copyBtn.className = 'code-copy-btn'
-    copyBtn.type = 'button'
-    copyBtn.innerText = 'copy'
-    copyBtn.parentElement = codeNode.parentElement
+function createCopyButton(codeNode) {
+const copyBtn = document.createElement('button')
+copyBtn.className = 'code-copy-btn'
+copyBtn.type = 'button'
+copyBtn.innerText = 'copy'
+copyBtn.parentElement = codeNode.parentElement
 
     let resetTimer
     copyBtn.addEventListener('click', () => {
@@ -149,12 +148,13 @@ Without line number
     })
 
     return copyBtn
-  }
 
-  document.querySelectorAll('pre > code').forEach((codeNode) => {
-    const copyBtn = createCopyButton(codeNode);
-    codeNode.parentNode.insertBefore(copyBtn, codeNode)
-  })
+}
+
+document.querySelectorAll('pre > code').forEach((codeNode) => {
+const copyBtn = createCopyButton(codeNode);
+codeNode.parentNode.insertBefore(copyBtn, codeNode)
+})
 
 })()
 {{< / highlight >}}

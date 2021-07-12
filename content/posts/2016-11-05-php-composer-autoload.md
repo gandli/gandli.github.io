@@ -3,14 +3,15 @@ title: composer中的autoload
 date: 2016-11-05 02:42:06
 category: tech
 tags:
-    - php
+  - php
 keywords:
-    - composer
-    - autoload
-    - psr-4
+  - composer
+  - autoload
+  - psr-4
+draft: true
 ---
 
-composer的autoload可以轻松的实现php的自动加载。在`composer.json`中添加`autoload`字段即可。当前支持 `PSR-0` `PSR-4` `classmap`解析和`files`包含。官方推荐PSR-4标准（添加类时不需要重新生成加载器）。
+composer 的 autoload 可以轻松的实现 php 的自动加载。在`composer.json`中添加`autoload`字段即可。当前支持 `PSR-0` `PSR-4` `classmap`解析和`files`包含。官方推荐 PSR-4 标准（添加类时不需要重新生成加载器）。
 
 ### PSR-4
 
@@ -23,6 +24,7 @@ Namespace prefixes must end in `\\` to avoid conflicts between similar prefixes.
 The PSR-4 references are all combined, during install/update, into a single key => value array which may be found in the generated file `vendor/composer/autoload_psr4.php`.
 
 实例：
+
 ```
 {
     "autoload": {
@@ -35,6 +37,7 @@ The PSR-4 references are all combined, during install/update, into a single key 
 ```
 
 如果需要在多个目录下搜索相同前缀，可以以数组的形式指定。
+
 ```
 {
     "autoload": {
@@ -44,6 +47,7 @@ The PSR-4 references are all combined, during install/update, into a single key 
 ```
 
 也可为所有命名空间指定默认文件夹：
+
 ```
 {
     "autoload": {
@@ -59,6 +63,7 @@ The PSR-4 references are all combined, during install/update, into a single key 
 你可以用 `classmap` 生成支持支持自定义加载的不遵循 `PSR-0/4` 规范的类库。要配置它指向需要的目录，以便能够准确搜索到类文件。
 
 实例：
+
 ```
 {
     "autoload": {
@@ -67,12 +72,12 @@ The PSR-4 references are all combined, during install/update, into a single key 
 }
 ```
 
-__相关链接__
+**相关链接**
 
 [Example Implementations of PSR-4](http://www.php-fig.org/psr/psr-4/examples/)
 
 [The composer.json Schema](https://getcomposer.org/doc/04-schema.md#autoload)
 
-[如何使用composer的autoload来自动加载自己编写的函数库与类库](http://drops.leavesongs.com/php/composer-autoload-class-and-function-written-myself.html)
+[如何使用 composer 的 autoload 来自动加载自己编写的函数库与类库](http://drops.leavesongs.com/php/composer-autoload-class-and-function-written-myself.html)
 
-[使用composer中的autoload](http://gywbd.github.io/posts/2014/12/composer-autoload.html)
+[使用 composer 中的 autoload](http://gywbd.github.io/posts/2014/12/composer-autoload.html)

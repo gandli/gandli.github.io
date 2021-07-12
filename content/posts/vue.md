@@ -2,12 +2,12 @@
 title: 'Vue.js'
 description: Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。
 date: 2021-06-15T20:01:20+08:00
-draft: false
+draft: true
 tags:
-  - JavaScrpit
+  - JavaScript
   - Vue
 categories:
-  - JavaScrpit
+  - JavaScript
   - Vue
 ---
 

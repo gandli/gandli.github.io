@@ -2,17 +2,18 @@
 title: JavaScript URI エンコーディング
 date: 2019-11-10 09:00:00
 tags:
-    - JavaScript
+  - JavaScript
 categories:
-- notes
+  - notes
 keywords:
-    - Javascript
-    - encodeURIComponent
+  - Javascript
+  - encodeURIComponent
+draft: true
 ---
 
 ## まとめ
 
-`encodeURI()`と`encodeURIComponent()`はRFC 2396準拠である。
+`encodeURI()`と`encodeURIComponent()`は RFC 2396 準拠である。
 `encodeURI()` は完全な URI を表すのに必要な文字 (Reserved Characters) はエンコードしません。
 また、予約されていないが "そのまま" URI に使用できる(Unreserved Marks) 文字をエンコードしません。
 `encodeURIComponent()` は "Unreserved Marks" 文字をエンコードしません。
@@ -31,6 +32,7 @@ console.log(encodeURIComponent(set2)); // -_.!~*'()
 ## rfc2396 appendix-A
 
 [https://tools.ietf.org/html/rfc2396#appendix-A](https://tools.ietf.org/html/rfc2396#appendix-A)
+
 ```
 URI-reference = [ absoluteURI | relativeURI ] [ "#" fragment ]
       absoluteURI   = scheme ":" ( hier_part | opaque_part )
@@ -78,7 +80,7 @@ URI-reference = [ absoluteURI | relativeURI ] [ "#" fragment ]
       query         = *uric
 
       fragment      = *uric
-      
+
       uric          = reserved | unreserved | escaped
       reserved      = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" |
                       "$" | ","

@@ -2,26 +2,28 @@
 title: Changes to String in java (from 1.7.0_06)
 date: 2020-06-06 09:00:00
 tags:
-- Algorithms
+  - Algorithms
 categories:
-- notes
+  - notes
 keywords:
-    - Algorithms
-    - String
-    - radix sort
+  - Algorithms
+  - String
+  - radix sort
+draft: true
 ---
 
-
 Before 1.7.0_06, `String` has 4 non static field:
-* char[] value
-* int[] offset
-* int count
-* int hash
+
+- char[] value
+- int[] offset
+- int count
+- int hash
 
 `Subing.substring` create a String by sharing the original String's internal `char[] value` and setting offset. This saves memory and makes `String.substring` run in a constant time($O(1)$).
 Meanwhile, this feature may cause **memory leak**[^1].
 
 [http://hg.openjdk.java.net/jdk6/jdk6/jdk/file/8deef18bb749/src/share/classes/java/lang/String.java](http://hg.openjdk.java.net/jdk6/jdk6/jdk/file/8deef18bb749/src/share/classes/java/lang/String.java)
+
 ```Java
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence
@@ -92,6 +94,7 @@ public final class String
 Since Java 1.7.0_06, `offset` and `count` fields were removed. `String.substring` makes new copies of `value`, which means we can forget about the memory leak but the runtime becomes $O(N)$ at the same time.
 
 [http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/lang/String.java)
+
 ```Java
 
 public final class String
@@ -185,6 +188,7 @@ public final class String
 
 The auther's comment[^2]:
 <a class="embedly-card" href="https://www.reddit.com/r/programming/comments/1qw73v/til_oracle_changed_the_internal_string/cdhb77f">Card</a>
+
 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
 
 [^1]: http://java-performance.info/changes-to-string-java-1-7-0_06/
