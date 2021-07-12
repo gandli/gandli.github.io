@@ -1,14 +1,19 @@
 {
   "list": [
     {
-      "name":"Hugo",
-      "url":"https://gohugo.io/",
-      "desc":"The world’s fastest framework for building websites."
+      "name": "Hugo",
+      "url": "https://gohugo.io/",
+      "desc": "The world’s fastest framework for building websites."
     },
     {
-      "name":"Hugo Themes",
-      "url":"https://github.com/gohugoio/hugoThemes",
-      "desc":"A curated directory of Hugo themes"
+      "name": "Hugo Themes",
+      "url": "https://github.com/gohugoio/hugoThemes",
+      "desc": "A curated directory of Hugo themes"
+    },
+    {
+      "name": "cactus",
+      "url": "https://github.com/monkeyWzr/hugo-theme-cactus",
+      "desc": "A hugo theme for personal blog. Fork from hexo theme cactus created by @probberechts."
     }
   ]
 }
