@@ -1,7 +1,9 @@
 ---
 title: rime
 date: 2024-06-17 23:33:26
-tags:
+tags: 
+    - rime
+draft: false
 ---
 
 1. [rime](https://rime.im/download/)
