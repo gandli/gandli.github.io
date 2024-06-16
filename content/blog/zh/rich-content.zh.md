@@ -8,7 +8,7 @@ featured: false
 ## figure
 
 ## ref in posts
-[Neat]({{< ref "blog/zh/how-to-integrate-umami-for-free-to-blog-site.zh" >}})
+[Neat]({{< ref "blog/zh/how-to-integrate-umami-for-free-to-blog-site.zh.md" >}})
 
 ## hide toggle
 {{< toggle summary="summary" >}}
