@@ -5,7 +5,7 @@ license: MIT
 licenselink: "https://github.com/gandli/gandli.github.io/blob/master/LICENSE"
 description: "A fast, clean Hugo theme"
 homepage: "https://gandli.github.io/"
-defaultContentLanguage: "en"
+defaultContentLanguage: "zh"
 googleAnalytics: G-4WXJ5TEK2S
 paginate: 10
 hasCJKLanguage: true
