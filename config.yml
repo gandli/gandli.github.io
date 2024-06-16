@@ -122,9 +122,9 @@ languages:
         - name: 留言板
           url: /guestbook
           weight: 4
-        - name: 统计
-          url: https://umami-ochre-nu.vercel.app/share/o3zAba1V/guangzhengli
-          weight: 5
+        # - name: 统计
+        #   url: https://umami-ochre-nu.vercel.app/share/o3zAba1V/guangzhengli
+        #   weight: 5
 taxonomies:
   series: series
   tag: tags
