@@ -1,5 +1,5 @@
 baseURL: "https://gandli.github.io/"
-title: LADDER
+title: GANDLI
 theme: hugo-theme-ladder
 license: MIT
 licenselink: "https://github.com/gandli/gandli.github.io/blob/master/LICENSE"
