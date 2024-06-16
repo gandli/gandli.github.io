@@ -12,8 +12,8 @@ featured: true
 Open the  `config.yml` file in the root directory with an editor and change the configuration as follows: 
 
 ```yml
-baseURL: 'https://hugo-ladder.pages.dev' # set https://username.github.io
-homepage: 'https://hugo-ladder.pages.dev' # set https://username.github.io
+baseURL: 'https://gandli.github.io/' # set https://username.github.io
+homepage: 'https://gandli.github.io/' # set https://username.github.io
 defaultContentLanguage: 'en' #default language
 params:
   brand: HOME # set the brand of your site
@@ -197,13 +197,13 @@ menu:
 This is a complete configuration example with some recommended values.
 
 ```yml
-baseURL: 'https://hugo-ladder.pages.dev'
+baseURL: 'https://gandli.github.io/'
 title: LADDER
 theme: hugo-theme-ladder
 license: MIT
 licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
 description: 'A fast, clean Hugo theme'
-homepage: 'https://hugo-ladder.pages.dev'
+homepage: 'https://gandli.github.io/'
 defaultContentLanguage: 'en'
 googleAnalytics: G-4WXJ5TEK2S
 paginate: 10

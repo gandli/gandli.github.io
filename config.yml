@@ -1,18 +1,18 @@
-baseURL: "https://hugo-ladder.pages.dev"
+baseURL: "https://gandli.github.io/"
 title: LADDER
 theme: hugo-theme-ladder
 license: MIT
-licenselink: "https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE"
+licenselink: "https://github.com/gandli/gandli.github.io/blob/master/LICENSE"
 description: "A fast, clean Hugo theme"
-homepage: "https://hugo-ladder.pages.dev"
+homepage: "https://gandli.github.io/"
 defaultContentLanguage: "en"
 googleAnalytics: G-4WXJ5TEK2S
 paginate: 10
 hasCJKLanguage: true
 copyright: "2023 GuangzhengLi All rights reserved"
 Author:
-  name: "Guangzheng Li"
-  email: "iguangzhengli@gmail.com"
+  name: "gandli"
+  email: "gandli@qq.com"
 menu:
   main:
     - name: Blog
@@ -46,20 +46,20 @@ params:
     enableMultiLang: true
     showMetaTags: true
   darkModeTheme: data-dark-mode
-  sponsors:
-    title: Sponsors
-    description: Support me by becoming a sponsor
-    buymeaCoffee:
-      enable: true
-      url: https://www.buymeacoffee.com/iguangzhengli
-      buttom_api: https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iguangzhengli&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
-      qr: https://storage.guangzhengli.com/images/buymeacoffee_sponsors.png
-    wechat:
-      enable: true
-      qr: https://storage.guangzhengli.com/images/alipay_sponsors.jpeg
-    alipay:
-      enable: true
-      qr: https://storage.guangzhengli.com/images/weixin_sponsors.jpeg
+  # sponsors:
+  #   title: Sponsors
+  #   description: Support me by becoming a sponsor
+    # buymeaCoffee:
+    #   enable: true
+    #   url: https://www.buymeacoffee.com/gandli
+    #   buttom_api: https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=gandli&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
+    #   qr: https://storage.guangzhengli.com/images/buymeacoffee_sponsors.png
+    # # wechat:
+    #   enable: true
+    #   qr: https://storage.guangzhengli.com/images/alipay_sponsors.jpeg
+    # alipay:
+    #   enable: true
+    #   qr: https://storage.guangzhengli.com/images/weixin_sponsors.jpeg
   comments:
     giscus:
       enable: true
