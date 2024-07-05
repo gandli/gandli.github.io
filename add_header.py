@@ -5,8 +5,9 @@ from datetime import datetime
 content_dir = 'content/weekly'
 
 header_template = """---
-date: "{date}"
-title: "{title}"
+date: {date}
+title: {title}
+weight: 2
 ---
 """
 
