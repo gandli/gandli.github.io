@@ -14,6 +14,8 @@
     <loc>http://localhost:1313/post/</loc>
     <lastmod>2015-10-25T08:36:54-07:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/weekly/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
