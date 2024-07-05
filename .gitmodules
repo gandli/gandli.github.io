@@ -1,3 +1,9 @@
 [submodule "themes/hugo.386"]
 	path = themes/hugo.386
 	url = https://gitlab.com/jmfergeau/hugo.386
+[submodule "themes/black-and-light"]
+	path = themes/black-and-light
+	url = https://github.com/davidhampgonsalves/hugo-black-and-light-theme.git
+[submodule "themes/lotusdocs"]
+	path = themes/lotusdocs
+	url = https://github.com/colinwilson/lotusdocs
