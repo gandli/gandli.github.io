@@ -13,7 +13,7 @@
       <link>http://localhost:1313/post/first/</link>
       <pubDate>Sun, 25 Oct 2015 08:36:54 -0700</pubDate>
       <guid>http://localhost:1313/post/first/</guid>
-      <description>Hello Hugo aaa bbb ccc </description>
+      <description>Hello Hugo aaa bbb ccc 中文标题 中文内容</description>
     </item>
   </channel>
 </rss>
