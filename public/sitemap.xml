@@ -20,17 +20,10 @@
     <loc>http://localhost:1313/tags/</loc>
     <lastmod>2023-05-03T22:37:22+01:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
-    <lastmod>2019-02-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/first/</loc>
-    <lastmod>2015-10-25T08:36:54-07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/</loc>
-    <lastmod>2015-10-25T08:36:54-07:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/weekly/2024-07-05/</loc>
     <lastmod>2015-10-25T08:36:54-07:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url>
