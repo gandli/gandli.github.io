@@ -27,6 +27,8 @@ jobs:
         run: python add_header.py
 
       - name: Commit and push changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'gandli'
           git config --global user.email 'gandli@qq.com'
