@@ -20,7 +20,7 @@ languages:
   en:
     languageName: English
     weight: 1
-    title: Hextra
+    title: gandli
   # zh-cn:
   #   languageName: 简体中文
   #   languageCode: zh-CN
