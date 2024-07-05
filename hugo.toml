@@ -50,7 +50,7 @@ preserveTaxonomyNames = true
     prefix = "[hugo.386 theme by Max le Fou](https://gitlab.com/maxlefou/hugo.386)"
 
     # Text to go between copyright and hugo disclaimer (if enabled)
-    suffix = "Example site"
+    suffix = "gandli"
 
 [menu]
   # This displays buttons in the navbar to access your contents
