@@ -65,10 +65,10 @@ menu:
     #   name: Showcase
     #   pageRef: /showcase
     #   weight: 2
-    - identifier: blog
-      name: Blog
-      pageRef: /blog
-      weight: 3
+    # - identifier: blog
+    #   name: Blog
+    #   pageRef: /blog
+    #   weight: 3
     # - identifier: about
     #   name: About
     #   pageRef: /about
