@@ -1,6 +1,6 @@
 +++
 title = 'Python 调用 openai gpt-4o-mini 生成文章摘要'
-date = 2024-10-10T00:54:54+08:00
+date = 2024-10-10T13:16:26+08:00
 draft = false
 +++
 
