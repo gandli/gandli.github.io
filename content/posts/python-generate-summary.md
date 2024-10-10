@@ -6,6 +6,13 @@ draft = false
 
 不少博客已用上了AI摘要，我们也可以给自己的博客加上。借助 OpenAI 的 GPT-4 模型，Python 开发者可以轻松调用这一强大的自然语言处理工具，生成精准的文章摘要。本篇文章将详细介绍如何通过 Python 调用 GPT-4o-mini 版本，来实现自动生成文章摘要的功能，帮助用户更快地从海量信息中获取所需内容。
 
+## 具体流程如下：
+
+初始化 OpenAI 客户端：从环境变量中获取 API 密钥和自定义的 API 基础 URL，初始化 OpenAI 客户端。
+生成摘要：函数 generate_summary 调用 OpenAI API 生成文章摘要。摘要是针对正文内容生成的，要求简洁明了并且带有吸引力。
+处理 Markdown 文件：函数 process_markdown_file 打开并读取每个 Markdown 文件，检查是否已有摘要。如果没有，则调用 generate_summary 生成摘要并插入到文件元数据中。
+批量处理：通过 process_all_markdown_files 函数，遍历指定目录下的所有 Markdown 文件，批量处理每个文件的摘要生成和插入。
+
 ```python
 import os
 from openai import OpenAI
