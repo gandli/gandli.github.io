@@ -1,4 +1,4 @@
-baseURL = 'https://gandil.github.io/'
+baseURL = 'https://gandli.github.io/'
 languageCode = 'zh-cn'
 title = 'Gandli Site'
 theme = "paper"
