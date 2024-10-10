@@ -1,5 +1,5 @@
 +++
-title = 'Python 调用 openai gpt-4o-mini 为Hugo 生成文章摘要'
+title = 'Python 调用 openai gpt-4o-mini 为 Hugo 生成文章摘要'
 date = 2024-10-10T13:16:26+08:00
 draft = false
 +++
