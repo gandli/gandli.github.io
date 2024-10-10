@@ -8,10 +8,12 @@ draft = false
 
 ## 具体流程如下：
 
-初始化 OpenAI 客户端：从环境变量中获取 API 密钥和自定义的 API 基础 URL，初始化 OpenAI 客户端。
-生成摘要：函数 generate_summary 调用 OpenAI API 生成文章摘要。摘要是针对正文内容生成的，要求简洁明了并且带有吸引力。
-处理 Markdown 文件：函数 process_markdown_file 打开并读取每个 Markdown 文件，检查是否已有摘要。如果没有，则调用 generate_summary 生成摘要并插入到文件元数据中。
-批量处理：通过 process_all_markdown_files 函数，遍历指定目录下的所有 Markdown 文件，批量处理每个文件的摘要生成和插入。
+1. 初始化 OpenAI 客户端：从环境变量中获取 API 密钥和自定义的 API 基础 URL，初始化 OpenAI 客户端。
+2. 生成摘要：函数 generate_summary 调用 OpenAI API 生成文章摘要。摘要是针对正文内容生成的，要求简洁明了并且带有吸引力。
+3. 处理 Markdown 文件：函数 process_markdown_file 打开并读取每个 Markdown 文件，检查是否已有摘要。如果没有，则调用 generate_summary 生成摘要并插入到文件元数据中。
+4. 批量处理：通过 process_all_markdown_files 函数，遍历指定目录下的所有 Markdown 文件，批量处理每个文件的摘要生成和插入。
+
+## 代码实现
 
 ```python
 import os
