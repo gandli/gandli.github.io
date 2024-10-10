@@ -55,7 +55,7 @@ for md_file in POSTS_DIR.glob("*.md"):
 
         # 如果 summary 已经存在，跳过该文件
         if f"{SUMMARY_KEY} =" in front_matter:
-            print(f"跳过 {md_file}，摘要已存在。")
+            print(f"Skipping {md_file}, summary already exists.")
             continue
 
         # 调用 OpenAI API 生成摘要
@@ -74,7 +74,7 @@ for md_file in POSTS_DIR.glob("*.md"):
         with open(md_file, "w") as file:
             file.write(new_content)
 
-        print(f"已为 {md_file} 添加摘要。")
+        print(f"Summary added to {md_file}")
 
     else:
-        print(f"跳过 {md_file}，未找到有效的元数据。")
+        print(f"Skipping {md_file}, no valid front matter found.")
