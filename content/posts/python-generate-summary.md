@@ -4,6 +4,8 @@ date = 2024-10-10T13:16:26+08:00
 draft = false
 +++
 
+不少博客已用上了AI摘要，我们也可以给自己的博客加上。借助 OpenAI 的 GPT-4 模型，Python 开发者可以轻松调用这一强大的自然语言处理工具，生成精准的文章摘要。本篇文章将详细介绍如何通过 Python 调用 GPT-4o-mini 版本，来实现自动生成文章摘要的功能，帮助用户更快地从海量信息中获取所需内容。
+
 ```python
 import os
 from openai import OpenAI
