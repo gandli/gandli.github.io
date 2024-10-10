@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gandli Site</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Gandli Site</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 10 Oct 2024 00:54:54 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python 在 Windows 环境下的文件路径问题</title>
+      <link>http://localhost:1313/posts/python-windows-file-path-issues/</link>
+      <pubDate>Thu, 10 Oct 2024 00:54:54 +0800</pubDate>
+      <guid>http://localhost:1313/posts/python-windows-file-path-issues/</guid>
+      <description>在Python中，处理Windows文件路径时，如何避免反斜杠造成的歧义？本文揭示三种简单且有效的解决方案，让你的代码无歧义、易执行！</description>
+    </item>
+  </channel>
+</rss>
