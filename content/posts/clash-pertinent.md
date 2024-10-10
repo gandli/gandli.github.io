@@ -6,7 +6,7 @@ draft = false
 
 1. [Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev)
 2. [Clash Nyanpasu](https://github.com/libnyanpasu/clash-nyanpasu)
-3. [FClash] (https://github.com/chen08209/FlClash)
+3. [FClash](https://github.com/chen08209/FlClash)
 4. [GUI.for.Clash](https://github.com/GUI-for-Cores/GUI.for.Clash)
 5. [Mihomo Party](https://github.com/mihomo-party-org/mihomo-party)
 6. [Pandora-Box](https://github.com/snakem982/Pandora-Box/)
