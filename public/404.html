@@ -1,374 +1,79 @@
-<!DOCTYPE html>
-<html lang="en"
-  x-data
-  :class="$store.darkMode.class()"
-  :data-theme="$store.darkMode.theme()">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found | </title>
 
-    
-
-<link rel="canonical" href="//localhost:1313/404.html" />
-
-
-
-<meta name="author" content="" />
-<meta name="description" content="" />
-
-
-
-<meta name="generator" content="Hugo 0.152.1">
-
-
-<meta property="og:url" content="//localhost:1313/404.html">
-  <meta property="og:title" content="404 Page not found">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
-
-
-
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="404 Page not found">
-
-
-
-
-<link rel="stylesheet" href="/css/output.css" />
-
-
-
-
-     
-
-    
-
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" integrity="sha256-4EHxtjnR5rL8JzbY12OKQJr81ESm7JBEb49ORPo29AY=" crossorigin="anonymous"></script>
-  </head>
-
-  <body x-data="{
-    flip: false,
-  }">
-    
-    <div id="dream-global-bg"></div>
-
-    
-<nav class="mt-4 lg:mt-8 py-4">
-
-  
-  <div class="container flex justify-between max-w-[65ch] mx-auto px-4 md:px-0">
-  
-    <section class="flex items-center gap-4">
-      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="Flip it!">
-        <div class="h-10 rounded-full">
-          <img src="/img/personal/avatar.jpg" alt="" />
-        </div>
-      </div>
-
-      
-    </section>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="dark">
+    <title>404 Page not found | Hugo Tania</title>
 
     
     
+    
+    <meta property="og:site_name" content="Hugo Tania is Amazing" />
+    <meta property="og:title" content="404 Page not found | Hugo Tania"/>
+    <meta itemprop="name" content="404 Page not found | Hugo Tania" />
+    <meta name="twitter:title" content="404 Page not found | Hugo Tania" />
+    <meta name="application-name" content="404 Page not found | Hugo Tania" /><meta name="twitter:card" content="summary"/>
 
-    <div class="dropdown dropdown-end sm:hidden">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
-        <ion-icon name="menu" class="text-2xl"></ion-icon>
-      </div>
-      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
-        
+    <meta name="description" content="Hugo is Absurdly Fast!" />
+    <meta name="twitter:description" content="Hugo is Absurdly Fast!"/>
+    <meta itemprop="description" content="Hugo is Absurdly Fast!"/>
+    <meta property="og:description" content="Hugo is Absurdly Fast!" />
 
-
-
-
-
-
-
-<li>
-  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="About">
-    <ion-icon name="information-circle"></ion-icon>About</div>
-</li>
+    
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li>
-  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="Archives">
-    <ion-icon name="archive"></ion-icon>
-    Archives
-  </a>
-</li>
-
-
-
-
-<li>
-  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="All Categories">
-    <ion-icon name="grid"></ion-icon>
-    All Categories
-  </a>
-</li>
-
-
-
-
-<li>
-  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="All Tags">
-    <ion-icon name="pricetags"></ion-icon>
-    All Tags
-  </a>
-</li>
-
-
-
-
-
-
-      </ul>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <link rel="stylesheet" href="/sass/main.min.19d0212515bce59aebbadb5adecaff692b6cbcec69932a8df9f696bbf056429b.css">
+    
+</head>
+<nav class="navbar">
+    <div class="container">
+        <div class="flex">
+            <div>
+                <a class="brand" href="/">
+                    
+                    
+                        <img src="/favicon.ico" />
+                    
+                    Hugo Tania
+                    </a>
+            </div>
+            <div class="flex">
+                
+                <a href="/articles/">Articles</a>
+                
+                
+                    <button id="dark-mode-button">
+                    <svg class="light" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M30.312.776C32 19 20 32 .776 30.312c8.199 7.717 21.091 7.588 29.107-.429C37.9 21.867 38.03 8.975 30.312.776z"/><path d="M30.705 15.915a1.163 1.163 0 1 0 1.643 1.641a1.163 1.163 0 0 0-1.643-1.641zm-16.022 14.38a1.74 1.74 0 0 0 0 2.465a1.742 1.742 0 1 0 0-2.465zm13.968-2.147a2.904 2.904 0 0 1-4.108 0a2.902 2.902 0 0 1 0-4.107a2.902 2.902 0 0 1 4.108 0a2.902 2.902 0 0 1 0 4.107z" fill="#FFCC4D"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    <svg class="dark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 36 36"><path fill="#FFD983" d="M16 2s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2V2zm18 14s2 0 2 2s-2 2-2 2h-2s-2 0-2-2s2-2 2-2h2zM4 16s2 0 2 2s-2 2-2 2H2s-2 0-2-2s2-2 2-2h2zm5.121-8.707s1.414 1.414 0 2.828s-2.828 0-2.828 0L4.878 8.708s-1.414-1.414 0-2.829c1.415-1.414 2.829 0 2.829 0l1.414 1.414zm21 21s1.414 1.414 0 2.828s-2.828 0-2.828 0l-1.414-1.414s-1.414-1.414 0-2.828s2.828 0 2.828 0l1.414 1.414zm-.413-18.172s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zm-21 21s-1.414 1.414-2.828 0s0-2.828 0-2.828l1.414-1.414s1.414-1.414 2.828 0s0 2.828 0 2.828l-1.414 1.414zM16 32s0-2 2-2s2 2 2 2v2s0 2-2 2s-2-2-2-2v-2z"/><circle fill="#FFD983" cx="18" cy="18" r="10"/><rect x="0" y="0" width="36" height="36" fill="rgba(0, 0, 0, 0)" /></svg>
+                    </button>
+                
+            </div>
+            </div>
     </div>
-    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
-      
-
-      
-      
-
-
-
-
-<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="About">About</div>
-
-
-
-
-
-      
-      
-
-
-
-
-
-      
-      
-
-
-
-
-
-      
-      
-<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/posts" title="Archives">
-  <ion-icon class="group-hover:text-primary-content" name="archive"></ion-icon>
-</a>
-
-
-      
-      
-<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/categories" title="All Categories">
-  <ion-icon class="group-hover:text-primary-content" name="grid"></ion-icon>
-</a>
-
-
-      
-      
-<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/tags" title="All Tags">
-  <ion-icon class="group-hover:text-primary-content" name="pricetags"></ion-icon>
-</a>
-
-
-      
-
-      
-
-      
-    </section>
-  </div>
 </nav>
 
 
-    <div class="flip-container" :class="{ 'flip-it': flip }">
-      <div class="flipper">
-        <div class="front">
-          <div class="container">
+<div class="container">
+<main>
+<h1>404 NOT FOUND</h1>
+</main>
+</div>
+
+<footer class="footer flex">
+    <section class="container">
+        <nav class="footer-links">
             
-<div class="h-[60vh] mx-auto px-4 flex flex-col justify-center items-center prose dark:prose-invert">
-  <h1>Oops...You are lost in dream.</h1>
-  <p>Don't worry though, click the button below to wake up.</p>
-  <button class="btn my-5" @click="window.location.href = '//localhost:1313/'">Back to home</button>
-</div>
-
-
+            <a href="/index.xml">RSS</a>
             
-<footer class="flex justify-between items-center gap-2 max-w-[65ch] mx-auto px-4 md:px-0 py-12">
+        </nav>
 
-  <div>
-  
-  <p>© 2025 </p>
-  
-
-  
-  <p class="text-sm">
-    🌱
-    <span class="text-base-content/60">
-      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
-      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
-    >
-  </p>
-  
-</div>
-
-  <div
-  x-data="{ icons: [
-    { name: 'sunny', status: 'n' },
-    { name: 'moon', status: 'y' },
-    { name: 'desktop', status: 'auto' }
-  ] }"
-  class="flex items-center gap-2 h-[32px] px-2 bg-base-100 border border-base-content/30 rounded-full"
->
-  <template x-for="icon in icons">
-    <div
-      role="button"
-      tabindex="0"
-      :aria-label="'Select ' + icon.name + ' mode'"
-      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
-      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
-      @click="$store.darkMode.toggle(icon.status)"
-    >
-      <ion-icon
-        :name="`${icon.name}-outline`"
-        class="group-hover:text-primary-content"
-        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
-      >
-      </ion-icon>
-    </div>
-  </template>
-</div>
-
+        
+    </section>
+    <script defer src="/ts/features.37f971827ef99765fedb6bb387d2a1f223fa27bfecc73f2aa42d2b4e64c7e40f.js" 
+    data-enable-footnotes="true"
+    ></script>
 </footer>
 
-          </div>
-        </div>
-        <div class="back">
-          <div class="container">
-            
-            <div class="max-w-[65ch] mt-8 mx-auto px-4">
-  
-  
-  
-  <div>
-    <div class="mb-4 text-lg font-medium">About Me</div>
-
-    <div class="prose dark:prose-invert">
-      <p>Hi, my name is gandli.</p>
-<p>This is my blog.</p>
-
-    </div>
-  </div>
-  <div class="divider divider-vertical"></div>
-  
-  
-
-  
-
-  
-</div>
-
-            
-
-            
-<footer class="flex justify-between items-center gap-2 max-w-[65ch] mx-auto px-4 md:px-0 py-12">
-
-  <div>
-  
-  <p>© 2025 </p>
-  
-
-  
-  <p class="text-sm">
-    🌱
-    <span class="text-base-content/60">
-      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
-      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
-    >
-  </p>
-  
-</div>
-
-  <div
-  x-data="{ icons: [
-    { name: 'sunny', status: 'n' },
-    { name: 'moon', status: 'y' },
-    { name: 'desktop', status: 'auto' }
-  ] }"
-  class="flex items-center gap-2 h-[32px] px-2 bg-base-100 border border-base-content/30 rounded-full"
->
-  <template x-for="icon in icons">
-    <div
-      role="button"
-      tabindex="0"
-      :aria-label="'Select ' + icon.name + ' mode'"
-      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
-      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
-      @click="$store.darkMode.toggle(icon.status)"
-    >
-      <ion-icon
-        :name="`${icon.name}-outline`"
-        class="group-hover:text-primary-content"
-        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
-      >
-      </ion-icon>
-    </div>
-  </template>
-</div>
-
-</footer>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-  window.lightTheme =  null 
-  window.darkTheme =  null 
-</script>
-
-
-
-
-
-<script src="/js/main.js"></script>
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js" integrity="sha256-/IFmi82bIhdYWctu0UddSlJqpnzWm7Vh2C4CM32wF/k=" crossorigin="anonymous"></script>
-    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js" integrity="sha256-mr7eJMX3VC3F7G32mk4oWp1C6a2tlMYxUdptfT7uKI8=" crossorigin="anonymous"></script>
-  </body>
-</html>
