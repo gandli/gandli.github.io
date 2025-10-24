@@ -1,10 +1,9 @@
-baseURL = "https://gandli.github.io/"
-# 可选：如果你希望只用一个配置文件，请将所有配置合并到 hugo.toml 并删除本文件。
-# 若保留本文件，建议保持与 hugo.toml 配置一致，避免混淆。
-languageCode = "en-us"
-title = "Hugo Tania"
+baseurl: "https://gandli.github.io"
+languageCode: "en-us"
+title: "Hugo Tania"
 theme: "hugo-tania"
-paginate: 6
+pagination:
+  pagerSize: 6
 
 disqusShortname: https-hugo-tania-netlify-app
 

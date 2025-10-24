@@ -11,4 +11,4 @@ description = "记录安全研究与开发笔记"
 - Cloudflare 边缘网络相关技巧
 - 工具使用笔记与故障排查
 
-建议从 [文章列表](/posts/) 开始阅读，或订阅 [RSS](/index.xml) 关注更新。
+建议从 [Latest Articles](/articles/) 开始阅读，或订阅 [RSS](/index.xml) 关注更新。
