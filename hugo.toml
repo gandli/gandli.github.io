@@ -1,3 +1,5 @@
 theme = "dream"
 [params]
 zenMode = true
+
+avatar = "img/personal/avatar.jpg"
