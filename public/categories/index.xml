@@ -6,6 +6,14 @@
     <description>Recent content in Categories on </description>
     <generator>Hugo</generator>
     <language>en</language>
+    <lastBuildDate>Fri, 24 Oct 2025 19:38:29 +0800</lastBuildDate>
     <atom:link href="//localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Categories</title>
+      <link>//localhost:1313/categories/categories/</link>
+      <pubDate>Fri, 24 Oct 2025 19:38:29 +0800</pubDate>
+      <guid>//localhost:1313/categories/categories/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

@@ -2,15 +2,8 @@
 date = '2025-10-24T19:38:29+08:00'
 draft = false
 title = 'Burp Suite Extensions 开发'
-categories:
-  - categories
-tags:
-  - burp
-  - extensions
-  - Cloudflare
-  - Worker
-  - Flareprox
-  - proxy
+categories = ["categories"]
+tags = ["burp", "extensions", "Cloudflare", "Worker", "Flareprox", "proxy"]
 +++
 
 ## Flareprox_Burp_Extension
