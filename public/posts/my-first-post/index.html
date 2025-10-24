@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=58032&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Burp Suite Extensions 开发 | My New Hugo Site</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Flareprox_Burp_Extension
+Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。
+开发环境 🛠️
+参考： 手动设置您的扩展开发环境
+
+IDE：推荐使用 IntelliJ IDEA 社区版 💡
+
+macOS：brew install intellij-idea-ce
+Windows：scoop install extras/idea
+
+
+JDK：推荐使用 Liberica JDK 21 Full ☕️
+
+macOS：brew install bell-sw/liberica/liberica-jdk21-full
+Windows：scoop bucket add java &amp;&amp; scoop install java/liberica21-full-jdk
+
+
+
+参考
+
+Cloudflare Workers 指定区域运行
+IPRotate_Burp_Extension
+-FlareProx
+Montoya API（GitHub 仓库）
+Montoya API 示例（GitHub 仓库）
+Montoya API 文档（Javadoc）
+httpbin.org：用于请求测试
+Burp-Suite-Extender-Montoya-Course（GitHub 仓库）
+Extending Burp Suite for Fun and Profit — The Montoya Way（Part 1）
+">
+    <meta name="generator" content="Hugo 0.152.1">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+
+    
+
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:58032/posts/my-first-post/">
+    
+
+    <meta property="og:url" content="http://localhost:58032/posts/my-first-post/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="Burp Suite Extensions 开发">
+  <meta property="og:description" content="Flareprox_Burp_Extension Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。
+开发环境 🛠️ 参考： 手动设置您的扩展开发环境
+IDE：推荐使用 IntelliJ IDEA 社区版 💡 macOS：brew install intellij-idea-ce Windows：scoop install extras/idea JDK：推荐使用 Liberica JDK 21 Full ☕️ macOS：brew install bell-sw/liberica/liberica-jdk21-full Windows：scoop bucket add java &amp;&amp; scoop install java/liberica21-full-jdk 参考 Cloudflare Workers 指定区域运行 IPRotate_Burp_Extension -FlareProx Montoya API（GitHub 仓库） Montoya API 示例（GitHub 仓库） Montoya API 文档（Javadoc） httpbin.org：用于请求测试 Burp-Suite-Extender-Montoya-Course（GitHub 仓库） Extending Burp Suite for Fun and Profit — The Montoya Way（Part 1）">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-24T19:38:29+08:00">
+    <meta property="article:modified_time" content="2025-10-24T19:38:29+08:00">
+
+  <meta itemprop="name" content="Burp Suite Extensions 开发">
+  <meta itemprop="description" content="Flareprox_Burp_Extension Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。
+开发环境 🛠️ 参考： 手动设置您的扩展开发环境
+IDE：推荐使用 IntelliJ IDEA 社区版 💡 macOS：brew install intellij-idea-ce Windows：scoop install extras/idea JDK：推荐使用 Liberica JDK 21 Full ☕️ macOS：brew install bell-sw/liberica/liberica-jdk21-full Windows：scoop bucket add java &amp;&amp; scoop install java/liberica21-full-jdk 参考 Cloudflare Workers 指定区域运行 IPRotate_Burp_Extension -FlareProx Montoya API（GitHub 仓库） Montoya API 示例（GitHub 仓库） Montoya API 文档（Javadoc） httpbin.org：用于请求测试 Burp-Suite-Extender-Montoya-Course（GitHub 仓库） Extending Burp Suite for Fun and Profit — The Montoya Way（Part 1）">
+  <meta itemprop="datePublished" content="2025-10-24T19:38:29+08:00">
+  <meta itemprop="dateModified" content="2025-10-24T19:38:29+08:00">
+  <meta itemprop="wordCount" content="81">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Burp Suite Extensions 开发">
+  <meta name="twitter:description" content="Flareprox_Burp_Extension Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。
+开发环境 🛠️ 参考： 手动设置您的扩展开发环境
+IDE：推荐使用 IntelliJ IDEA 社区版 💡 macOS：brew install intellij-idea-ce Windows：scoop install extras/idea JDK：推荐使用 Liberica JDK 21 Full ☕️ macOS：brew install bell-sw/liberica/liberica-jdk21-full Windows：scoop bucket add java &amp;&amp; scoop install java/liberica21-full-jdk 参考 Cloudflare Workers 指定区域运行 IPRotate_Burp_Extension -FlareProx Montoya API（GitHub 仓库） Montoya API 示例（GitHub 仓库） Montoya API 文档（Javadoc） httpbin.org：用于请求测试 Burp-Suite-Extender-Montoya-Course（GitHub 仓库） Extending Burp Suite for Fun and Profit — The Montoya Way（Part 1）">
+
+	
+  </head><body class="ma0 avenir bg-near-white development">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        My New Hugo Site
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  
+  <article class="flex-l mw8 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">Burp Suite Extensions 开发</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2025-10-24T19:38:29+08:00">October 24, 2025</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h2 id="flareprox_burp_extension">Flareprox_Burp_Extension</h2>
+<p>Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。</p>
+<h2 id="开发环境-">开发环境 🛠️</h2>
+<p>参考： <a href="https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating/set-up/manual-setup">手动设置您的扩展开发环境</a></p>
+<ul>
+<li>IDE：推荐使用 IntelliJ IDEA 社区版 💡
+<ul>
+<li>macOS：<code>brew install intellij-idea-ce</code></li>
+<li>Windows：<code>scoop install extras/idea</code></li>
+</ul>
+</li>
+<li>JDK：推荐使用 Liberica JDK 21 Full ☕️
+<ul>
+<li>macOS：<code>brew install bell-sw/liberica/liberica-jdk21-full</code></li>
+<li>Windows：<code>scoop bucket add java &amp;&amp; scoop install java/liberica21-full-jdk</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://blog.lyc8503.net/post/cloudflare-worker-region/">Cloudflare Workers 指定区域运行</a></li>
+<li><a href="https://github.com/RhinoSecurityLabs/IPRotate_Burp_Extension">IPRotate_Burp_Extension</a>
+-<a href="https://github.com/MrTurvey/flareprox">FlareProx</a></li>
+<li><a href="https://github.com/PortSwigger/burp-extensions-montoya-api">Montoya API（GitHub 仓库）</a></li>
+<li><a href="https://github.com/PortSwigger/burp-extensions-montoya-api-examples">Montoya API 示例（GitHub 仓库）</a></li>
+<li><a href="https://portswigger.github.io/burp-extensions-montoya-api/javadoc/">Montoya API 文档（Javadoc）</a></li>
+<li><a href="https://httpbin.org/">httpbin.org</a>：用于请求测试</li>
+<li><a href="https://github.com/federicodotta/Burp-Suite-Extender-Montoya-Course">Burp-Suite-Extender-Montoya-Course（GitHub 仓库）</a></li>
+<li><a href="https://hnsecurity.it/blog/extending-burp-suite-for-fun-and-profit-the-montoya-way-part-1/">Extending Burp Suite for Fun and Profit — The Montoya Way（Part 1）</a></li>
+</ul>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:58032/" >
+    &copy;  My New Hugo Site 2025 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
