@@ -3,41 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/tags/burp/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/flareprox_burp_extension/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/categories/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/cloudflare/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/extensions/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/flareprox/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/proxy/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/worker/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-10-24T19:38:29+08:00</lastmod>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/proxy/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/worker/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2025-10-24T20:48:30+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/articles/</loc>
+    <lastmod>2025-10-24T20:11:37+08:00</lastmod>
   </url>
 </urlset>

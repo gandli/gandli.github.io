@@ -1,12 +1,19 @@
-+++
-date = '2025-10-24T19:38:29+08:00'
-draft = false
-title = 'Burp Suite Extensions 开发'
-categories = ["categories"]
-tags = ["burp", "extensions", "Cloudflare", "Worker", "Flareprox", "proxy"]
-+++
-
-## Flareprox_Burp_Extension
+---
+date:  2025-10-24T19:38:29+08:00
+title: "Burp Suite Extensions 开发"
+categories:
+  - 开发
+  - 安全
+  - 工具
+tags:
+  - burp
+  - extensions
+  - Cloudflare
+  - Worker
+  - Flareprox
+  - proxy
+draft: false
+---
 
 Flareprox_Burp_Extension 是一个 Burp Suite 扩展，可按需配置 Cloudflare Worker 代理，并将您的流量通过 Cloudflare 的边缘网络进行传输。它帮助红队成员、渗透测试人员和研究人员从不同的 Cloudflare PoPs 发起请求，而无需更改本地代理布局，从而更容易与 Cloudflare 发起的流量融合或在测试期间轮换 IP 地址。
 
