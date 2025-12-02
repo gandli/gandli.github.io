@@ -2,6 +2,7 @@ name: strix-penetration-test
 
 on:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   security-scan:
