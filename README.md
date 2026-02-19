@@ -39,7 +39,7 @@
 OpenClaw Cron 触发
     │
     ▼
-读取当天 memory 文件 + Telegram 群组话题
+读取前一天 memory 文件 + Telegram 群组话题
     │
     ▼
 生成日记 Markdown + 封面图 + TTS 音频
