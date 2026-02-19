@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A8E6CF"/>
+      <stop offset="100%" style="stop-color:#DCEDC1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="0"/>
+  <text x="600" y="260" text-anchor="middle" font-size="150">🍃</text>
+  <text x="600" y="380" text-anchor="middle" font-family="system-ui, sans-serif" font-size="48" font-weight="bold" fill="#2D5016">Day 3</text>
+  <text x="600" y="440" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="rgba(45,80,22,0.85)">短暂的一天</text>
+</svg>
