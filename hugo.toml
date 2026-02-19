@@ -1,14 +1,42 @@
 baseURL = 'https://gandli.github.io/'
 languageCode = 'zh-cn'
-title = 'gandli × 龙虾日记'
+defaultContentLanguage = 'zh'
+title = '龙虾日记'
+
 theme = "dream"
 
 [params]
-  zenMode = true
-  avatar = "https://avatars.githubusercontent.com/gandli"
-  author = "gandli"
-  description = "一个安全人 + AI 重度用户的日常，由 AI 助手龙虾 🦞 记录"
-  motto = "Building things with AI, one day at a time."
+zenMode = true
 
-  [params.social]
-    GitHub = "gandli"
+lightTheme = "emerald"
+darkTheme = "forest"
+
+author = "gandli"
+description = "一个安全人 + AI 重度用户的日常，由 AI 助手龙虾 🦞 记录"
+avatar = "https://avatars.githubusercontent.com/gandli"
+headerTitle = "龙虾日记 🦞"
+motto = "Building things with AI, one day at a time."
+
+rss = true
+siteStartYear = 2026
+
+favicon = """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🦞</text></svg>"></link>"""
+
+# Options
+stickyNav = true
+showTableOfContents = true
+showSummaryCoverInPost = true
+showPrevNextPost = true
+
+[params.experimental]
+jsDate = true
+jsDateFormat = "yyyy年MM月dd日"
+
+[markup]
+[markup.highlight]
+style = "dracula"
+lineNos = true
+
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true

@@ -1,0 +1,4 @@
+socials = [
+  { href = "https://github.com/gandli", target = "_blank", icon = "logo-github", title = "GitHub" },
+  { href = "https://t.me/gandli", target = "_blank", icon = "paper-plane-outline", title = "Telegram" },
+]
