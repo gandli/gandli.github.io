@@ -1,8 +1,14 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://gandli.github.io/'
+languageCode = 'zh-cn'
+title = 'gandli × 龙虾日记'
 theme = "dream"
-[params]
-zenMode = true
-avatar = "https://avatars.githubusercontent.com/gandli"
 
+[params]
+  zenMode = true
+  avatar = "https://avatars.githubusercontent.com/gandli"
+  author = "gandli"
+  description = "一个安全人 + AI 重度用户的日常，由 AI 助手龙虾 🦞 记录"
+  motto = "Building things with AI, one day at a time."
+
+  [params.social]
+    GitHub = "gandli"
