@@ -84,6 +84,18 @@
           </figure>
         {{ end }}
 
+        {{ with .Params.audio }}
+        <div class="audio-player my-4 p-4 rounded-lg bg-base-200/50">
+          <div class="flex items-center gap-2 mb-2">
+            <ion-icon name="headset-outline" class="text-lg"></ion-icon>
+            <span class="text-sm font-medium">🔊 听这篇日记</span>
+          </div>
+          <audio controls preload="metadata" class="w-full" style="height: 40px;">
+            <source src="{{ . }}" type="audio/mpeg">
+          </audio>
+        </div>
+        {{ end }}
+
         {{ .Content | emojify }}
 
         {{ if fileExists "layouts/partials/adsense-post-bottom.html" }}
