@@ -1,0 +1,188 @@
+name: Process Diary Entry
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "content/posts/*.md"
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: "Post filename (e.g., 2026-02-25-day7.md)"
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "process-diary"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      new_posts: ${{ steps.detect.outputs.new_posts }}
+      has_new: ${{ steps.detect.outputs.has_new }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new Chinese diary posts
+        id: detect
+        run: |
+          if [ -n "${{ github.event.inputs.post_file }}" ]; then
+            echo "new_posts=${{ github.event.inputs.post_file }}" >> $GITHUB_OUTPUT
+            echo "has_new=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Find new/modified Chinese posts (exclude -en. files)
+          NEW_POSTS=$(git diff --name-only HEAD~1 HEAD -- 'content/posts/*.md' | grep -v '\-en\.' | grep -v '\.en\.' || true)
+          
+          if [ -z "$NEW_POSTS" ]; then
+            echo "has_new=false" >> $GITHUB_OUTPUT
+            echo "No new Chinese posts found."
+          else
+            # Convert to single line, space-separated
+            POSTS_LINE=$(echo "$NEW_POSTS" | tr '\n' ' ')
+            echo "new_posts=$POSTS_LINE" >> $GITHUB_OUTPUT
+            echo "has_new=true" >> $GITHUB_OUTPUT
+            echo "New posts: $POSTS_LINE"
+          fi
+
+  process:
+    needs: detect
+    if: needs.detect.outputs.has_new == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install edge-tts openai requests
+          # Install Hugo
+          HUGO_VERSION=0.128.0
+          wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i /tmp/hugo.deb
+
+      - name: Process each new post
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: |
+          for POST_FILE in ${{ needs.detect.outputs.new_posts }}; do
+            echo "=== Processing: $POST_FILE ==="
+            
+            BASENAME=$(basename "$POST_FILE" .md)
+            DIR=$(dirname "$POST_FILE")
+            
+            # Skip if already an English version
+            if echo "$BASENAME" | grep -qE '\-en$|\.en$'; then
+              echo "Skipping English file: $POST_FILE"
+              continue
+            fi
+
+            # Extract frontmatter and content
+            CONTENT=$(sed -n '/^---$/,/^---$/!p' "$POST_FILE" | tail -n +1)
+            FRONTMATTER=$(sed -n '1,/^---$/p; /^---$/,/^---$/p' "$POST_FILE" | head -n -1)
+            TITLE=$(grep '^title:' "$POST_FILE" | head -1 | sed 's/title: *"*//;s/"*$//')
+            
+            # --- 1. Generate Chinese Summary ---
+            echo "Generating Chinese summary..."
+            python3 scripts/generate_summary.py "$POST_FILE" zh
+
+            # --- 2. Generate Cover Image ---
+            echo "Generating cover image..."
+            python3 scripts/generate_cover.py "$POST_FILE" || echo "Cover generation failed, using default"
+            
+            # --- 3. Translate to English ---
+            echo "Translating to English..."
+            EN_FILE="${DIR}/${BASENAME}-en.md"
+            python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
+            
+            # --- 4. Generate Chinese Audio ---
+            echo "Generating Chinese audio..."
+            AUDIO_ZH="static/audio/${BASENAME}.mp3"
+            mkdir -p static/audio
+            sed -n '/^---$/,/^---$/!p' "$POST_FILE" | tail -n +1 > /tmp/content_zh.txt
+            edge-tts --voice "zh-CN-XiaoxiaoNeural" --file /tmp/content_zh.txt --write-media "$AUDIO_ZH" || echo "Chinese TTS failed"
+            
+            # --- 5. Generate English Audio ---
+            echo "Generating English audio..."
+            AUDIO_EN="static/audio/${BASENAME}-en.mp3"
+            if [ -f "$EN_FILE" ]; then
+              sed -n '/^---$/,/^---$/!p' "$EN_FILE" | tail -n +1 > /tmp/content_en.txt
+              edge-tts --voice "en-US-GuyNeural" --file /tmp/content_en.txt --write-media "$AUDIO_EN" || echo "English TTS failed"
+            fi
+
+            echo "=== Done: $POST_FILE ==="
+          done
+
+      - name: Commit processed files
+        run: |
+          git config user.name "Lobster Bot 🦞"
+          git config user.email "lobster@gandli.github.io"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🦞 Auto-process: summary, translation, cover, audio"
+            git push
+          fi
+
+  build-deploy:
+    needs: process
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: main
+
+      - name: Pull latest (processed files)
+        run: git pull origin main
+
+      - name: Install Hugo
+        run: |
+          HUGO_VERSION=0.128.0
+          wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i /tmp/hugo.deb
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Hugo
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          HUGO_ENVIRONMENT: production
+        run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
