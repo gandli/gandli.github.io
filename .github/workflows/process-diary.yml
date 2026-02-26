@@ -44,14 +44,12 @@ jobs:
             exit 0
           fi
 
-          # Find new/modified Chinese posts (exclude -en. files)
           NEW_POSTS=$(git diff --name-only HEAD~1 HEAD -- 'content/posts/*.md' | grep -v '\-en\.' | grep -v '\.en\.' || true)
-          
+
           if [ -z "$NEW_POSTS" ]; then
             echo "has_new=false" >> $GITHUB_OUTPUT
             echo "No new Chinese posts found."
           else
-            # Convert to single line, space-separated
             POSTS_LINE=$(echo "$NEW_POSTS" | tr '\n' ' ')
             echo "new_posts=$POSTS_LINE" >> $GITHUB_OUTPUT
             echo "has_new=true" >> $GITHUB_OUTPUT
@@ -74,7 +72,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install edge-tts openai requests
+          pip install edge-tts requests
           # Install Hugo
           HUGO_VERSION=0.128.0
           wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
@@ -82,53 +80,74 @@ jobs:
 
       - name: Process each new post
         env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
-          LLM_MODEL: ${{ secrets.LLM_MODEL }}
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
           for POST_FILE in ${{ needs.detect.outputs.new_posts }}; do
             echo "=== Processing: $POST_FILE ==="
-            
+
             BASENAME=$(basename "$POST_FILE" .md)
             DIR=$(dirname "$POST_FILE")
-            
-            # Skip if already an English version
+
             if echo "$BASENAME" | grep -qE '\-en$|\.en$'; then
               echo "Skipping English file: $POST_FILE"
               continue
             fi
 
-            # Extract frontmatter and content
-            CONTENT=$(sed -n '/^---$/,/^---$/!p' "$POST_FILE" | tail -n +1)
-            FRONTMATTER=$(sed -n '1,/^---$/p; /^---$/,/^---$/p' "$POST_FILE" | head -n -1)
-            TITLE=$(grep '^title:' "$POST_FILE" | head -1 | sed 's/title: *"*//;s/"*$//')
-            
             # --- 1. Generate Chinese Summary ---
-            echo "Generating Chinese summary..."
+            echo "📝 Generating Chinese summary..."
             python3 scripts/generate_summary.py "$POST_FILE" zh
 
-            # --- 2. Generate Cover Image ---
-            echo "Generating cover image..."
+            # --- 2. Generate Cover Image (Cloudflare FLUX) ---
+            echo "🎨 Generating cover image..."
             python3 scripts/generate_cover.py "$POST_FILE" || echo "Cover generation failed, using default"
-            
-            # --- 3. Translate to English ---
-            echo "Translating to English..."
+
+            # --- 3. Translate to English (Cloudflare Llama) ---
+            echo "🌐 Translating to English..."
             EN_FILE="${DIR}/${BASENAME}-en.md"
             python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
-            
-            # --- 4. Generate Chinese Audio ---
-            echo "Generating Chinese audio..."
+
+            # --- 4. Generate English Summary (already done in translate) ---
+
+            # --- 5. Generate Chinese Audio (Edge TTS) ---
+            echo "🔊 Generating Chinese audio..."
             AUDIO_ZH="static/audio/${BASENAME}.mp3"
             mkdir -p static/audio
-            sed -n '/^---$/,/^---$/!p' "$POST_FILE" | tail -n +1 > /tmp/content_zh.txt
+            # Strip markdown for cleaner TTS
+            python3 -c "
+import re, sys
+with open('$POST_FILE') as f: text = f.read()
+parts = text.split('---', 2)
+body = parts[2] if len(parts) >= 3 else text
+body = re.sub(r'^#+\s+', '', body, flags=re.MULTILINE)
+body = re.sub(r'\*+([^*]+)\*+', r'\1', body)
+body = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', body)
+body = re.sub(r'\`[^\`]+\`', '', body)
+body = re.sub(r'\`\`\`[\s\S]*?\`\`\`', '', body)
+body = re.sub(r'^[>\-\|].*$', '', body, flags=re.MULTILINE)
+body = re.sub(r'\n{3,}', '\n\n', body).strip()
+with open('/tmp/content_zh.txt', 'w') as f: f.write(body)
+" || true
             edge-tts --voice "zh-CN-XiaoxiaoNeural" --file /tmp/content_zh.txt --write-media "$AUDIO_ZH" || echo "Chinese TTS failed"
-            
-            # --- 5. Generate English Audio ---
-            echo "Generating English audio..."
+
+            # --- 6. Generate English Audio (Edge TTS) ---
+            echo "🔊 Generating English audio..."
             AUDIO_EN="static/audio/${BASENAME}-en.mp3"
             if [ -f "$EN_FILE" ]; then
-              sed -n '/^---$/,/^---$/!p' "$EN_FILE" | tail -n +1 > /tmp/content_en.txt
+              python3 -c "
+import re
+with open('$EN_FILE') as f: text = f.read()
+parts = text.split('---', 2)
+body = parts[2] if len(parts) >= 3 else text
+body = re.sub(r'^#+\s+', '', body, flags=re.MULTILINE)
+body = re.sub(r'\*+([^*]+)\*+', r'\1', body)
+body = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', body)
+body = re.sub(r'\`[^\`]+\`', '', body)
+body = re.sub(r'\`\`\`[\s\S]*?\`\`\`', '', body)
+body = re.sub(r'^[>\-\|].*$', '', body, flags=re.MULTILINE)
+body = re.sub(r'\n{3,}', '\n\n', body).strip()
+with open('/tmp/content_en.txt', 'w') as f: f.write(body)
+" || true
               edge-tts --voice "en-US-GuyNeural" --file /tmp/content_en.txt --write-media "$AUDIO_EN" || echo "English TTS failed"
             fi
 
@@ -143,7 +162,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🦞 Auto-process: summary, translation, cover, audio"
+            git commit -m "🦞 Auto-process: summary, cover, translation, audio [CF AI]"
             git push
           fi
 
@@ -159,7 +178,7 @@ jobs:
           submodules: recursive
           ref: main
 
-      - name: Pull latest (processed files)
+      - name: Pull latest
         run: git pull origin main
 
       - name: Install Hugo
