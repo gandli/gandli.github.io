@@ -32,7 +32,7 @@ theme = "dream"
       jsDateFormat = "MMM dd, yyyy"
 
 [params]
-zenMode = true
+zenMode = false
 
 lightTheme = "emerald"
 darkTheme = "forest"
