@@ -8,6 +8,7 @@ import requests
 CF_API_BASE = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run"
 TEXT_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 IMAGE_MODEL = "@cf/black-forest-labs/FLUX-1-schnell"
+TTS_MODEL = "@cf/myshell-ai/melotts"
 
 
 def _headers():
@@ -46,3 +47,20 @@ def generate_image(prompt: str) -> bytes:
     import base64
     data = resp.json()
     return base64.b64decode(data["result"]["image"])
+
+
+def tts(text: str, lang: str = "zh") -> bytes:
+    """Generate speech audio bytes via MeloTTS. Returns WAV/MP3 bytes."""
+    # MeloTTS language codes
+    lang_map = {"zh": "zh", "en": "en", "ja": "ja", "ko": "ko", "fr": "fr", "es": "es"}
+    payload = {"text": text, "lang": lang_map.get(lang, "en")}
+    headers = _headers()
+    headers["Accept"] = "audio/wav"
+    resp = requests.post(_url(TTS_MODEL), headers=headers, json=payload, timeout=180)
+    resp.raise_for_status()
+    if resp.headers.get("content-type", "").startswith("audio/"):
+        return resp.content
+    # Fallback JSON
+    import base64
+    data = resp.json()
+    return base64.b64decode(data["result"]["audio"])

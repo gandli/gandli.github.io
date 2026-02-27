@@ -72,7 +72,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install edge-tts requests
+          pip install requests
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           # Install Hugo
           HUGO_VERSION=0.128.0
           wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
@@ -107,48 +108,15 @@ jobs:
             EN_FILE="${DIR}/${BASENAME}-en.md"
             python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
 
-            # --- 4. Generate English Summary (already done in translate) ---
-
-            # --- 5. Generate Chinese Audio (Edge TTS) ---
+            # --- 4. Generate Chinese Audio (Cloudflare MeloTTS) ---
             echo "🔊 Generating Chinese audio..."
-            AUDIO_ZH="static/audio/${BASENAME}.mp3"
-            mkdir -p static/audio
-            # Strip markdown for cleaner TTS
-            python3 -c "
-import re, sys
-with open('$POST_FILE') as f: text = f.read()
-parts = text.split('---', 2)
-body = parts[2] if len(parts) >= 3 else text
-body = re.sub(r'^#+\s+', '', body, flags=re.MULTILINE)
-body = re.sub(r'\*+([^*]+)\*+', r'\1', body)
-body = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', body)
-body = re.sub(r'\`[^\`]+\`', '', body)
-body = re.sub(r'\`\`\`[\s\S]*?\`\`\`', '', body)
-body = re.sub(r'^[>\-\|].*$', '', body, flags=re.MULTILINE)
-body = re.sub(r'\n{3,}', '\n\n', body).strip()
-with open('/tmp/content_zh.txt', 'w') as f: f.write(body)
-" || true
-            edge-tts --voice "zh-CN-XiaoxiaoNeural" --file /tmp/content_zh.txt --write-media "$AUDIO_ZH" || echo "Chinese TTS failed"
+            python3 scripts/generate_audio.py "$POST_FILE" zh "static/audio/${BASENAME}.mp3" || echo "Chinese TTS failed"
 
-            # --- 6. Generate English Audio (Edge TTS) ---
+            # --- 5. Generate English Audio (Cloudflare MeloTTS) ---
             echo "🔊 Generating English audio..."
-            AUDIO_EN="static/audio/${BASENAME}-en.mp3"
+            EN_FILE="${DIR}/${BASENAME}-en.md"
             if [ -f "$EN_FILE" ]; then
-              python3 -c "
-import re
-with open('$EN_FILE') as f: text = f.read()
-parts = text.split('---', 2)
-body = parts[2] if len(parts) >= 3 else text
-body = re.sub(r'^#+\s+', '', body, flags=re.MULTILINE)
-body = re.sub(r'\*+([^*]+)\*+', r'\1', body)
-body = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', body)
-body = re.sub(r'\`[^\`]+\`', '', body)
-body = re.sub(r'\`\`\`[\s\S]*?\`\`\`', '', body)
-body = re.sub(r'^[>\-\|].*$', '', body, flags=re.MULTILINE)
-body = re.sub(r'\n{3,}', '\n\n', body).strip()
-with open('/tmp/content_en.txt', 'w') as f: f.write(body)
-" || true
-              edge-tts --voice "en-US-GuyNeural" --file /tmp/content_en.txt --write-media "$AUDIO_EN" || echo "English TTS failed"
+              python3 scripts/generate_audio.py "$EN_FILE" en "static/audio/${BASENAME}-en.mp3" || echo "English TTS failed"
             fi
 
             echo "=== Done: $POST_FILE ==="
