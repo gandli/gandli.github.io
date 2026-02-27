@@ -132,7 +132,6 @@ jobs:
             EN_FILE="${DIR}/${BASENAME}.en.md"
             COVER_JPG="static/covers/${BASENAME}.jpg"
             AUDIO_ZH="static/audio/${BASENAME}.mp3"
-            AUDIO_ZH="static/audio/${BASENAME}.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
             # --- 1. Chinese Summary ---
@@ -144,7 +143,7 @@ jobs:
             fi
 
             # --- 2. Cover Image ---
-            if [ "$FORCE" = "true" ] || { ! [ -f "$COVER_PNG" ] && ! [ -f "$COVER_JPG" ]; }; then
+            if [ "$FORCE" = "true" ] || ! [ -f "$COVER_JPG" ]; then
               echo "🎨 Generating cover..."
               python3 scripts/generate_cover.py "$POST_FILE" || echo "⚠️ Cover failed"
             else

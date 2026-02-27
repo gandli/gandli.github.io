@@ -170,7 +170,7 @@ Push: ✅ gandli/gandli.github.io
 ## Cover Image Spec
 
 - **Dimensions**: 1344 × 768 pixels (7:4 ratio)
-- **Format**: JPG preferred (smaller file size), PNG acceptable
+- **Format**: JPG (quality 90%)
 - **Style**: Cartoon lobster 🦞 themed, relevant to article content
 - **Location**: `static/covers/`
 - **Frontmatter ref**: `cover: /covers/YYYY-MM-DD-dayN.jpg`
