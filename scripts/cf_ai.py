@@ -6,9 +6,8 @@ import sys
 import json
 import requests
 
-CF_API_BASE = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run"
 TEXT_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
-IMAGE_MODEL = "@cf/black-forest-labs/FLUX-1-schnell"
+IMAGE_MODEL = "@cf/stabilityai/stable-diffusion-xl-base-1.0"
 TTS_MODEL = "@cf/myshell-ai/melotts"
 
 
@@ -49,10 +48,10 @@ def chat(prompt: str, max_tokens: int = 2048, model: str = TEXT_MODEL) -> str:
 
 
 def generate_image(prompt: str) -> bytes:
-    """Generate an image and return raw PNG bytes."""
-    payload = {"prompt": prompt, "num_steps": 4}
+    """Generate an image via Stable Diffusion XL and return raw PNG bytes."""
+    payload = {"prompt": prompt}
     headers = _headers()
-    headers["Accept"] = "image/png"
+    # SDXL returns binary image directly
     resp = requests.post(_url(IMAGE_MODEL), headers=headers, json=payload, timeout=120)
     _check_response(resp, "image")
     if resp.headers.get("content-type", "").startswith("image/"):
@@ -60,15 +59,17 @@ def generate_image(prompt: str) -> bytes:
     # Fallback: JSON with base64
     import base64
     data = resp.json()
-    return base64.b64decode(data["result"]["image"])
+    if data.get("success") and "image" in data.get("result", {}):
+        return base64.b64decode(data["result"]["image"])
+    raise RuntimeError(f"Unexpected image response: {data}")
 
 
 def tts(text: str, lang: str = "zh") -> bytes:
-    """Generate speech audio bytes via MeloTTS. Returns WAV/MP3 bytes."""
+    """Generate speech audio bytes via MeloTTS."""
+    # MeloTTS uses 'prompt' for text input
     lang_map = {"zh": "zh", "en": "en", "ja": "ja", "ko": "ko", "fr": "fr", "es": "es"}
-    payload = {"text": text, "lang": lang_map.get(lang, "en")}
+    payload = {"prompt": text, "lang": lang_map.get(lang, "en")}
     headers = _headers()
-    headers["Accept"] = "audio/wav"
     resp = requests.post(_url(TTS_MODEL), headers=headers, json=payload, timeout=180)
     _check_response(resp, "tts")
     if resp.headers.get("content-type", "").startswith("audio/"):
@@ -76,4 +77,6 @@ def tts(text: str, lang: str = "zh") -> bytes:
     # Fallback JSON
     import base64
     data = resp.json()
-    return base64.b64decode(data["result"]["audio"])
+    if data.get("success") and "audio" in data.get("result", {}):
+        return base64.b64decode(data["result"]["audio"])
+    raise RuntimeError(f"Unexpected TTS response: {data}")
