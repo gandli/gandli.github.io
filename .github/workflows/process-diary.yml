@@ -10,6 +10,10 @@ on:
       post_file:
         description: "Post filename (e.g., 2026-02-25-day7.md)"
         required: false
+      force:
+        description: "Force regenerate all assets"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -74,15 +78,15 @@ jobs:
         run: |
           pip install requests
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          # Install Hugo
           HUGO_VERSION=0.128.0
           wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
           sudo dpkg -i /tmp/hugo.deb
 
-      - name: Process each new post
+      - name: Process each post (skip existing assets)
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          FORCE: ${{ github.event.inputs.force }}
         run: |
           for POST_FILE in ${{ needs.detect.outputs.new_posts }}; do
             echo "=== Processing: $POST_FILE ==="
@@ -91,32 +95,60 @@ jobs:
             DIR=$(dirname "$POST_FILE")
 
             if echo "$BASENAME" | grep -qE '\-en$|\.en$'; then
-              echo "Skipping English file: $POST_FILE"
+              echo "⏭️ Skipping English file: $POST_FILE"
               continue
             fi
 
-            # --- 1. Generate Chinese Summary ---
-            echo "📝 Generating Chinese summary..."
-            python3 scripts/generate_summary.py "$POST_FILE" zh
-
-            # --- 2. Generate Cover Image (Cloudflare FLUX) ---
-            echo "🎨 Generating cover image..."
-            python3 scripts/generate_cover.py "$POST_FILE" || echo "Cover generation failed, using default"
-
-            # --- 3. Translate to English (Cloudflare Llama) ---
-            echo "🌐 Translating to English..."
             EN_FILE="${DIR}/${BASENAME}-en.md"
-            python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
+            COVER_FILE="static/covers/${BASENAME}.png"
+            AUDIO_ZH="static/audio/${BASENAME}.mp3"
+            AUDIO_EN="static/audio/${BASENAME}-en.mp3"
 
-            # --- 4. Generate Chinese Audio (Cloudflare MeloTTS) ---
-            echo "🔊 Generating Chinese audio..."
-            python3 scripts/generate_audio.py "$POST_FILE" zh "static/audio/${BASENAME}.mp3" || echo "Chinese TTS failed"
+            # --- Helper: check if frontmatter has a field ---
+            has_field() {
+              grep -q "^$1:" "$2" 2>/dev/null
+            }
 
-            # --- 5. Generate English Audio (Cloudflare MeloTTS) ---
-            echo "🔊 Generating English audio..."
-            EN_FILE="${DIR}/${BASENAME}-en.md"
-            if [ -f "$EN_FILE" ]; then
-              python3 scripts/generate_audio.py "$EN_FILE" en "static/audio/${BASENAME}-en.mp3" || echo "English TTS failed"
+            # --- 1. Chinese Summary ---
+            if [ "$FORCE" = "true" ] || ! has_field summary "$POST_FILE"; then
+              echo "📝 Generating Chinese summary..."
+              python3 scripts/generate_summary.py "$POST_FILE" zh
+            else
+              echo "⏭️ Summary already exists"
+            fi
+
+            # --- 2. Cover Image ---
+            if [ "$FORCE" = "true" ] || ! [ -f "$COVER_FILE" ]; then
+              echo "🎨 Generating cover image..."
+              python3 scripts/generate_cover.py "$POST_FILE" || echo "⚠️ Cover generation failed"
+            else
+              echo "⏭️ Cover already exists: $COVER_FILE"
+            fi
+
+            # --- 3. English Translation ---
+            if [ "$FORCE" = "true" ] || ! [ -f "$EN_FILE" ]; then
+              echo "🌐 Translating to English..."
+              python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
+            else
+              echo "⏭️ English version already exists: $EN_FILE"
+            fi
+
+            # --- 4. Chinese Audio ---
+            if [ "$FORCE" = "true" ] || ! [ -f "$AUDIO_ZH" ]; then
+              echo "🔊 Generating Chinese audio..."
+              python3 scripts/generate_audio.py "$POST_FILE" zh "$AUDIO_ZH" || echo "⚠️ Chinese TTS failed"
+            else
+              echo "⏭️ Chinese audio already exists: $AUDIO_ZH"
+            fi
+
+            # --- 5. English Audio ---
+            if [ "$FORCE" = "true" ] || ! [ -f "$AUDIO_EN" ]; then
+              if [ -f "$EN_FILE" ]; then
+                echo "🔊 Generating English audio..."
+                python3 scripts/generate_audio.py "$EN_FILE" en "$AUDIO_EN" || echo "⚠️ English TTS failed"
+              fi
+            else
+              echo "⏭️ English audio already exists: $AUDIO_EN"
             fi
 
             echo "=== Done: $POST_FILE ==="
