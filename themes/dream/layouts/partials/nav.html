@@ -44,10 +44,16 @@
       <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
         {{ partial "navMobileMenu.html" (dict "navItems" $navItems) }}
         {{ if gt (len site.Languages) 1 }}
+        {{ $translations := $.Translations }}
         {{ range site.Sites }}
         {{ if ne .Language.Lang $.Language.Lang }}
+        {{ $targetLang := .Language.Lang }}
+        {{ $targetURL := .Home.RelPermalink }}
+        {{ range $translations }}
+        {{ if eq .Language.Lang $targetLang }}{{ $targetURL = .RelPermalink }}{{ end }}
+        {{ end }}
         <li>
-          <a class="inline-flex items-center p-2 cursor-pointer" href="{{ .Home.RelPermalink }}" title="{{ .Language.LanguageName }}">
+          <a class="inline-flex items-center p-2 cursor-pointer" href="{{ $targetURL }}" title="{{ .Language.LanguageName }}">
             <ion-icon name="language"></ion-icon>
             {{ .Language.LanguageName }}
           </a>
@@ -93,9 +99,15 @@
       {{ end }}
 
       {{ if gt (len site.Languages) 1 }}
+      {{ $translations := $.Translations }}
       {{ range site.Sites }}
       {{ if ne .Language.Lang $.Language.Lang }}
-      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ .Home.RelPermalink }}" title="{{ .Language.LanguageName }}">
+      {{ $targetLang := .Language.Lang }}
+      {{ $targetURL := .Home.RelPermalink }}
+      {{ range $translations }}
+      {{ if eq .Language.Lang $targetLang }}{{ $targetURL = .RelPermalink }}{{ end }}
+      {{ end }}
+      <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="{{ $targetURL }}" title="{{ .Language.LanguageName }}">
         <ion-icon class="group-hover:text-primary-content" name="language"></ion-icon>
       </a>
       {{ end }}
