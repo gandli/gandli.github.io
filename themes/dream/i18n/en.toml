@@ -20,6 +20,8 @@ allTags = "All Tags"
 minuteRead = " minute read"
 updatedAt = "Updated at"
 socialLinks = "Social Links"
+listenDiary = "🔊 Listen to this diary"
+switchLang = "Switch Language"
 
 [article]
 one = "1 article"

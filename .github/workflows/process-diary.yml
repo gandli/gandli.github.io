@@ -6,7 +6,7 @@ on:
     paths:
       - "content/posts/*.md"
   schedule:
-    - cron: "0 */6 * * *"  # every 6 hours, catch any missed posts
+    - cron: "0 */6 * * *" # every 6 hours, catch any missed posts
   workflow_dispatch:
     inputs:
       post_file:
@@ -53,11 +53,8 @@ jobs:
 
           # Scan ALL Chinese posts, find those missing assets
           NEEDS_WORK=""
-          for POST in content/posts/*.md; do
-            BASENAME=$(basename "$POST" .md)
-
-            # Skip English versions
-            echo "$BASENAME" | grep -qE '\-en$|\.en$' && continue
+          for POST in content/posts/*.zh.md; do
+            BASENAME=$(basename "$POST" .zh.md)
 
             if [ "$FORCE" = "true" ]; then
               NEEDS_WORK="$NEEDS_WORK $POST"
@@ -73,7 +70,7 @@ jobs:
             [ -f "static/covers/${BASENAME}.png" ] || [ -f "static/covers/${BASENAME}.jpg" ] || MISSING="$MISSING cover"
 
             # Check English version
-            EN_FILE="content/posts/${BASENAME}-en.md"
+            EN_FILE="content/posts/${BASENAME}.en.md"
             [ -f "$EN_FILE" ] || MISSING="$MISSING en"
 
             # Check Chinese audio
@@ -129,12 +126,10 @@ jobs:
           for POST_FILE in ${{ needs.detect.outputs.posts_to_process }}; do
             echo "=== Processing: $POST_FILE ==="
 
-            BASENAME=$(basename "$POST_FILE" .md)
+            BASENAME=$(basename "$POST_FILE" .zh.md)
             DIR=$(dirname "$POST_FILE")
 
-            echo "$BASENAME" | grep -qE '\-en$|\.en$' && continue
-
-            EN_FILE="${DIR}/${BASENAME}-en.md"
+            EN_FILE="${DIR}/${BASENAME}.en.md"
             COVER_PNG="static/covers/${BASENAME}.png"
             COVER_JPG="static/covers/${BASENAME}.jpg"
             AUDIO_ZH="static/audio/${BASENAME}.mp3"

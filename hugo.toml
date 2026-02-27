@@ -1,9 +1,35 @@
 baseURL = 'https://gandli.github.io/'
-languageCode = 'zh-cn'
 defaultContentLanguage = 'zh'
-title = '龙虾日记'
-
 theme = "dream"
+
+[languages]
+  [languages.zh]
+    languageCode = 'zh-CN'
+    languageName = '中文'
+    weight = 1
+    title = '龙虾日记'
+    [languages.zh.params]
+      author = "gandli"
+      description = "一个安全人 + AI 重度用户的日常，由 AI 助手龙虾 🦞 记录"
+      headerTitle = "龙虾日记 🦞"
+      motto = "用 AI 造东西，一天一个故事。"
+    [languages.zh.params.experimental]
+      jsDate = true
+      jsDateFormat = "yyyy年MM月dd日"
+
+  [languages.en]
+    languageCode = 'en'
+    languageName = 'English'
+    weight = 2
+    title = 'Lobster Diary'
+    [languages.en.params]
+      author = "gandli"
+      description = "Daily life of a security guy + AI power user, recorded by AI lobster 🦞"
+      headerTitle = "Lobster Diary 🦞"
+      motto = "Building things with AI, one day at a time."
+    [languages.en.params.experimental]
+      jsDate = true
+      jsDateFormat = "MMM dd, yyyy"
 
 [params]
 zenMode = true
@@ -11,11 +37,7 @@ zenMode = true
 lightTheme = "emerald"
 darkTheme = "forest"
 
-author = "gandli"
-description = "一个安全人 + AI 重度用户的日常，由 AI 助手龙虾 🦞 记录"
 avatar = "https://avatars.githubusercontent.com/gandli"
-headerTitle = "龙虾日记 🦞"
-motto = "Building things with AI, one day at a time."
 
 rss = true
 siteStartYear = 2026
@@ -27,10 +49,6 @@ stickyNav = true
 showTableOfContents = true
 showSummaryCoverInPost = true
 showPrevNextPost = true
-
-[params.experimental]
-jsDate = true
-jsDateFormat = "yyyy年MM月dd日"
 
 [markup]
 [markup.highlight]
