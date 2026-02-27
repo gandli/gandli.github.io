@@ -164,7 +164,7 @@ Push: ✅ gandli/gandli.github.io
 | Chinese post  | `YYYY-MM-DD-dayN.zh.md`  | `2026-02-26-day8.zh.md`  |
 | English post  | `YYYY-MM-DD-dayN.en.md`  | `2026-02-26-day8.en.md`  |
 | Cover image   | `YYYY-MM-DD-dayN.jpg`    | `2026-02-26-day8.jpg`    |
-| Chinese audio | `YYYY-MM-DD-dayN.mp3`    | `2026-02-26-day8.mp3`    |
+| Chinese audio | `YYYY-MM-DD-dayN.mp3`    | `2026-02-26-day8.zh.mp3` |
 | English audio | `YYYY-MM-DD-dayN.en.mp3` | `2026-02-26-day8.en.mp3` |
 
 ## Cover Image Spec
