@@ -11,7 +11,7 @@ VOICE="en-US-GuyNeural"
 
 for day in 1 2 3 4 5; do
   EN_FILE="content/posts/2026-02-*-day${day}-en.md"
-  AUDIO_FILE="static/audio/day${day}-en.mp3"
+  AUDIO_FILE="static/audio/day${day}.en.mp3"
   
   if ls $EN_FILE 1> /dev/null 2>&1; then
     echo "Generating audio for Day $day (English)..."

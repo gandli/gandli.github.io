@@ -77,7 +77,7 @@ jobs:
             [ -f "static/audio/${BASENAME}.mp3" ] || MISSING="$MISSING audio_zh"
 
             # Check English audio
-            [ -f "static/audio/${BASENAME}-en.mp3" ] || MISSING="$MISSING audio_en"
+            [ -f "static/audio/${BASENAME}.en.mp3" ] || MISSING="$MISSING audio_en"
 
             if [ -n "$MISSING" ]; then
               echo "📋 $BASENAME missing:$MISSING"
@@ -133,7 +133,7 @@ jobs:
             COVER_PNG="static/covers/${BASENAME}.png"
             COVER_JPG="static/covers/${BASENAME}.jpg"
             AUDIO_ZH="static/audio/${BASENAME}.mp3"
-            AUDIO_EN="static/audio/${BASENAME}-en.mp3"
+            AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
             # --- 1. Chinese Summary ---
             if [ "$FORCE" = "true" ] || ! grep -q '^summary:' "$POST_FILE"; then
