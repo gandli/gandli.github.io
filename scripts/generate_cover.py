@@ -4,6 +4,7 @@
 import sys
 import os
 import re
+import io
 sys.path.insert(0, os.path.dirname(__file__))
 from cf_ai import chat, generate_image
 
@@ -53,12 +54,21 @@ def main():
         img_bytes = generate_image(prompt)
         cover_dir = "static/covers"
         os.makedirs(cover_dir, exist_ok=True)
-        cover_file = f"{cover_dir}/{basename}.png"
-        with open(cover_file, 'wb') as f:
-            f.write(img_bytes)
+        cover_file = f"{cover_dir}/{basename}.jpg"
 
-        inject_cover(filepath, f"/covers/{basename}.png")
-        print(f"Cover generated: {cover_file} ({len(img_bytes)} bytes)")
+        # Convert to JPG at 1344x768
+        try:
+            from PIL import Image
+            img = Image.open(io.BytesIO(img_bytes))
+            img = img.convert('RGB').resize((1344, 768), Image.LANCZOS)
+            img.save(cover_file, 'JPEG', quality=90)
+        except ImportError:
+            # Fallback: save raw bytes if Pillow not available
+            with open(cover_file, 'wb') as f:
+                f.write(img_bytes)
+
+        inject_cover(filepath, f"/covers/{basename}.jpg")
+        print(f"Cover generated: {cover_file}")
     except Exception as e:
         print(f"Cover generation error: {e}")
 

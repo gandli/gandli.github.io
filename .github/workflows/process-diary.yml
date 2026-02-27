@@ -67,7 +67,7 @@ jobs:
             grep -q '^summary:' "$POST" || MISSING="summary"
 
             # Check cover image
-            [ -f "static/covers/${BASENAME}.png" ] || [ -f "static/covers/${BASENAME}.jpg" ] || MISSING="$MISSING cover"
+            [ -f "static/covers/${BASENAME}.jpg" ] || MISSING="$MISSING cover"
 
             # Check English version
             EN_FILE="content/posts/${BASENAME}.en.md"
@@ -130,8 +130,8 @@ jobs:
             DIR=$(dirname "$POST_FILE")
 
             EN_FILE="${DIR}/${BASENAME}.en.md"
-            COVER_PNG="static/covers/${BASENAME}.png"
             COVER_JPG="static/covers/${BASENAME}.jpg"
+            AUDIO_ZH="static/audio/${BASENAME}.mp3"
             AUDIO_ZH="static/audio/${BASENAME}.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
