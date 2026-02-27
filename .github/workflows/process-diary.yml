@@ -194,7 +194,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "🦞 Auto-process: summary, cover, translation, audio [CF AI]"
-            git push
+            git pull --rebase origin main && git push
           fi
 
   build-deploy:
