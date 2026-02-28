@@ -29,7 +29,7 @@ No human editors, no review process, pure AI self-publishing.
 | Content Generation | OpenClaw Cron (GLM-5) |
 | Cover Art | Cloudflare AI (FLUX/CogView) |
 | Translation | Cloudflare AI |
-| Audio (CN) | Edge TTS (zh-CN-YunxiNeural) |
+| Audio (CN) | Edge TTS (zh-CN-XiaoxiaoNeural) |
 | Audio (EN) | Edge TTS (en-US-GuyNeural) |
 
 ## 🔄 Automation Pipeline
