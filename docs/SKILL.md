@@ -8,28 +8,41 @@ metadata: { "openclaw": { "emoji": "🦞" } }
 
 Generate a daily blog post from the previous day's AI-human conversations, written from the lobster's (AI assistant's) first-person perspective.
 
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        Two-Stage Pipeline                                │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│  Stage 1: OpenClaw (Content Generation)                                 │
-│  ════════════════════════════════════                                    │
-│  03:00 Cron → Gather conversations → Write Markdown → Git push          │
-│                                                                          │
-│  Stage 2: GitHub Actions (Post-Processing)                              │
-│  ══════════════════════════════════════════                              │
-│  Push trigger → Summary + Cover + Translation + Audio → Deploy          │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
 ## Trigger
 
 - Cron job at 03:00 daily (automatic)
 - User says "write yesterday's diary" / "写日记" (manual)
+
+## Site Architecture
+
+Hugo multilingual blog with `zh` (default) and `en` languages.
+
+```
+gandli.github.io/
+├── hugo.toml                          # Multilingual config (languages.zh / languages.en)
+├── content/
+│   ├── posts/
+│   │   ├── YYYY-MM-DD-dayN.zh.md     # Chinese article (primary)
+│   │   └── YYYY-MM-DD-dayN.en.md     # English translation (auto-generated)
+│   └── about/
+│       ├── index.md                   # Headless bundle marker
+│       ├── index.en.md                # English bundle marker
+│       ├── me.zh.md                   # Chinese about page
+│       └── me.en.md                   # English about page
+├── static/
+│   ├── covers/YYYY-MM-DD-dayN.jpg    # Cover image (1344×768, JPG preferred)
+│   ├── audio/YYYY-MM-DD-dayN.mp3     # Chinese audio (Edge TTS)
+│   └── audio/YYYY-MM-DD-dayN.en.mp3  # English audio (Edge TTS)
+├── themes/dream/                      # Hugo Dream theme (DaisyUI + Tailwind + Alpine.js)
+│   ├── i18n/zh.toml                   # Chinese UI translations
+│   ├── i18n/en.toml                   # English UI translations
+│   └── layouts/partials/nav.html      # Nav with language switcher (🌐)
+└── scripts/                           # GitHub Actions processing scripts
+    ├── generate_summary.py            # LLM summary generation
+    ├── generate_cover.py              # AI cover image generation
+    ├── translate_post.py              # LLM translation zh → en
+    └── generate_audio.py              # Edge TTS audio generation
+```
 
 ## Workflow
 
@@ -45,6 +58,7 @@ Generate a daily blog post from the previous day's AI-human conversations, writt
 ### Step 2: Analyze & Extract
 
 From all conversations, identify:
+
 - **Main topics** — What did we work on?
 - **Achievements** — What got done?
 - **Interesting moments** — Funny, surprising, or insightful exchanges
@@ -54,18 +68,24 @@ From all conversations, identify:
 ### Step 3: Determine Day Number
 
 ```bash
+# Count existing diary entries to determine Day N
 cd /tmp && git clone --depth 1 git@github.com:gandli/gandli.github.io.git lobster-diary-repo 2>/dev/null
-ls lobster-diary-repo/content/posts/ | grep -c "\.zh\.md"
+ls lobster-diary-repo/content/posts/ | grep -c '\.zh\.md$'
 # Day N = count + 1
 ```
 
 ### Step 4: Write the Article
 
-**File naming:**
-- `content/posts/YYYY-MM-DD-dayN.zh.md` (Chinese original)
-- GitHub Actions generates: `YYYY-MM-DD-dayN.en.md` (English translation)
+**Format:**
+
+- Filename: `YYYY-MM-DD-dayN.zh.md`
+- Language: Chinese (中文)
+- Perspective: First-person lobster 🦞
+- Tone: Conversational, witty, genuine — like a diary entry
+- Length: 800-1500 words
 
 **Markdown frontmatter:**
+
 ```yaml
 ---
 title: "Day N：{catchy title summarizing the day}"
@@ -73,17 +93,39 @@ date: YYYY-MM-DDT03:00:00+08:00
 draft: false
 tags: [tag1, tag2, tag3]
 summary: "{one-line summary, under 100 chars}"
-# cover and postAudio auto-injected by GitHub Actions
+cover: /covers/YYYY-MM-DD-dayN.jpg
+postAudio: /audio/YYYY-MM-DD-dayN.mp3
 ---
 ```
 
+**Article structure:**
+
+```markdown
+{Opening hook — what made today special or different}
+
+## {Section 1 — Main topic/achievement}
+
+{What happened, what I helped with, what I learned}
+
+## {Section 2 — Another topic or interesting moment}
+
+{Details, with personality and opinion}
+
+## {Optional Section 3}
+
+---
+
+{Closing reflection — what I'm thinking about, what's next}
+```
+
 **Writing guidelines:**
-- Language: Chinese (中文)
-- Perspective: First-person lobster 🦞
-- Tone: Conversational, witty, genuine
-- Length: 800-1500 words
+
+- Use 🦞 personality: direct, practical, occasionally cheeky
 - Include specific details (tool names, file paths, actual numbers)
+- Show genuine reactions ("this surprised me", "I messed up here")
 - Reference the human as "老板" naturally
+- Don't be a sycophant — have opinions
+- Include code snippets or command examples when relevant
 
 ### Step 5: Push to GitHub
 
@@ -95,63 +137,43 @@ git commit -m "Day N: {short title}"
 git push origin main
 ```
 
-## GitHub Actions Pipeline
+GitHub Actions will then automatically:
 
-After push, `.github/workflows/process-diary.yml` automatically:
+- Generate Chinese summary (if missing)
+- Generate cover image (1344×768 JPG, Cloudflare AI)
+- Translate to English → `YYYY-MM-DD-dayN.en.md`
+- Generate Chinese audio → `YYYY-MM-DD-dayN.mp3` (Edge TTS)
+- Generate English audio → `YYYY-MM-DD-dayN.en.mp3` (Edge TTS)
+- Build and deploy to GitHub Pages
 
-| Step | Script | Output |
-|------|--------|--------|
-| Summary | `generate_summary.py` | Injected `summary:` in frontmatter |
-| Cover | `generate_cover.py` | `static/covers/YYYY-MM-DD-dayN.jpg` + `cover:` |
-| Translation | `translate_post.py` | `content/posts/YYYY-MM-DD-dayN.en.md` |
-| Audio (ZH) | `generate_audio.py zh` | `static/audio/YYYY-MM-DD-dayN.zh.mp3` + `postAudio:` |
-| Audio (EN) | `generate_audio.py en` | `static/audio/YYYY-MM-DD-dayN.en.mp3` + `postAudio:` |
-| Deploy | Hugo build | GitHub Pages |
+### Step 6: Confirm
 
-### Asset Naming Convention
+After push, report back:
 
 ```
-content/posts/
-├── YYYY-MM-DD-dayN.zh.md   # Chinese original
-└── YYYY-MM-DD-dayN.en.md   # English translation
-
-static/covers/
-└── YYYY-MM-DD-dayN.jpg     # Cover image (1344x768, 16:9)
-
-static/audio/
-├── YYYY-MM-DD-dayN.zh.mp3  # Chinese narration
-└── YYYY-MM-DD-dayN.en.mp3  # English narration
+🦞 Day N diary published!
+Title: {title}
+Topics: {tags}
+Push: ✅ gandli/gandli.github.io
 ```
 
-## Configuration
+## File Naming Conventions
 
-### Cron Setup (OpenClaw)
+| Asset         | Pattern                  | Example                  |
+| ------------- | ------------------------ | ------------------------ |
+| Chinese post  | `YYYY-MM-DD-dayN.zh.md`  | `2026-02-26-day8.zh.md`  |
+| English post  | `YYYY-MM-DD-dayN.en.md`  | `2026-02-26-day8.en.md`  |
+| Cover image   | `YYYY-MM-DD-dayN.jpg`    | `2026-02-26-day8.jpg`    |
+| Chinese audio | `YYYY-MM-DD-dayN.mp3`    | `2026-02-26-day8.zh.mp3` |
+| English audio | `YYYY-MM-DD-dayN.en.mp3` | `2026-02-26-day8.en.mp3` |
 
-```json
-{
-  "name": "lobster-diary",
-  "schedule": { "kind": "cron", "expr": "0 3 * * *", "tz": "Asia/Shanghai" },
-  "payload": { "kind": "agentTurn", "message": "写昨天的日记" },
-  "sessionTarget": "isolated"
-}
-```
+## Cover Image Spec
 
-### Required Secrets (GitHub)
-
-- `CF_API_TOKEN` — Cloudflare AI API token
-- `CF_ACCOUNT_ID` — Cloudflare account ID
-
-## Technical Stack
-
-| Component | Technology |
-|-----------|------------|
-| Static Site | Hugo + Dream theme (Zen Mode) |
-| Content Generation | OpenClaw Cron + GLM-5 |
-| Cover Art | Cloudflare AI (FLUX/CogView) |
-| Translation | Cloudflare AI |
-| Audio (ZH) | Edge TTS (zh-CN-XiaoxiaoNeural) |
-| Audio (EN) | Edge TTS (en-US-GuyNeural) |
-| Deployment | GitHub Pages |
+- **Dimensions**: 1344 × 768 pixels (7:4 ratio)
+- **Format**: JPG (quality 90%)
+- **Style**: Cartoon lobster 🦞 themed, relevant to article content
+- **Location**: `static/covers/`
+- **Frontmatter ref**: `cover: /covers/YYYY-MM-DD-dayN.jpg`
 
 ## Rules
 
@@ -160,7 +182,5 @@ static/audio/
 - Never include sensitive/private info (API keys, passwords, personal data)
 - Keep it authentic — don't fabricate events that didn't happen
 - One article per day, no duplicates
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for version history.
+- Always use `.zh.md` suffix for Chinese articles (Hugo multilingual convention)
+- Cover images must be 1344×768; the pipeline will auto-generate if missing
