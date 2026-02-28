@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Translate a Chinese diary post to English using Cloudflare Workers AI."""
+"""Translate a Chinese diary post to English using LLM API."""
 
 import sys
 import os
 import re
-sys.path.insert(0, os.path.dirname(__file__))
-from cf_ai import chat
+import requests
 
 
 def extract_frontmatter_and_content(filepath):
@@ -17,81 +16,70 @@ def extract_frontmatter_and_content(filepath):
     return '', text
 
 
+def call_llm(prompt, api_key, api_base):
+    """Call LLM API."""
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 4096
+    }
+    
+    response = requests.post(
+        f"{api_base}/chat/completions",
+        headers=headers,
+        json=payload,
+        timeout=60
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
+
+
 def main():
     src_file = sys.argv[1]
-    dst_file = sys.argv[2]
+    dst_file = sys.argv[2] if len(sys.argv) > 2 else src_file.replace('.zh.md', '.en.md')
 
-    if not os.environ.get('CF_API_TOKEN'):
-        print("Warning: CF_API_TOKEN not set, skipping translation")
+    api_key = os.environ.get('LLM_API_KEY')
+    api_base = os.environ.get('LLM_API_BASE', 'https://api.openai.com/v1')
+    
+    if not api_key:
+        print("Warning: LLM_API_KEY not set, skipping translation")
         return
 
-    frontmatter, content = extract_frontmatter_and_content(src_file)
+    fm, content = extract_frontmatter_and_content(src_file)
 
-    # Extract metadata from original
-    title_match = re.search(r'title:\s*"(.+)"', frontmatter)
-    title_zh = title_match.group(1) if title_match else "Untitled"
-    tags_match = re.search(r'tags:\s*\[(.+)\]', frontmatter)
-    tags_zh = tags_match.group(1) if tags_match else ''
-    date_match = re.search(r'date:\s*(.+)', frontmatter)
-    date = date_match.group(1) if date_match else ''
-    cover_match = re.search(r'cover:\s*(.+)', frontmatter)
-    cover_path = cover_match.group(1) if cover_match else ''
-    # Strip .zh from cover path if present (covers are language-neutral)
-    cover_path = re.sub(r'\.zh\.(jpg|png|webp)$', r'.\1', cover_path)
-    cover = f'\ncover: {cover_path}' if cover_path else ''
+    # Translate content
+    prompt = (
+        "Translate the following Chinese blog post to English. "
+        "Keep the markdown formatting. "
+        "Return only the translated content, no explanations.\n\n"
+        f"{content}"
+    )
 
-    # Translate title
-    title_en = chat(
-        f'Translate this blog title to English. Keep "Day N" format if present. Return ONLY the title:\n{title_zh}',
-        max_tokens=100
-    ).strip().strip('"').strip("'")
-
-    # Translate tags
-    tags_en = ''
-    if tags_zh:
-        tags_en = chat(
-            f"Translate these tags to English, comma-separated. Return ONLY the tags list:\n{tags_zh}",
-            max_tokens=100
-        ).strip()
-
-    # Translate content (chunk if long)
-    translated = chat(
-        f"""Translate this Chinese blog post to English. Maintain Markdown formatting and code blocks.
-Keep technical terms as-is. The author is an AI lobster assistant 🦞 writing a daily diary.
-
-{content}
-
-Return ONLY the translated Markdown body, no frontmatter.""",
-        max_tokens=4096
-    ).strip()
-
-    # Generate English summary
-    summary_en = chat(
-        f"Generate a one-line summary (under 100 chars) in English for this post. Return ONLY the summary:\n{translated[:2000]}",
-        max_tokens=200
-    ).strip().strip('"').strip("'")
-
-    # Write English post
-    tags_line = f'tags: [{tags_en}]' if tags_en else 'tags: []'
-    en_post = f"""---
-title: "{title_en}"
-date: {date}
-draft: false
-author: "Lobster 🦞"
-categories: ["diary"]
-{tags_line}
-summary: "{summary_en}"{cover}
----
-
-{translated}
-"""
-
-    with open(dst_file, 'w', encoding='utf-8') as f:
-        f.write(en_post)
-
-    print(f"Translated: {src_file} -> {dst_file}")
-    print(f"Title EN: {title_en}")
-    print(f"Summary EN: {summary_en}")
+    try:
+        translated = call_llm(prompt, api_key, api_base)
+        
+        # Translate title in frontmatter
+        title_match = re.search(r'title:\s*"(.+)"', fm)
+        if title_match:
+            title_zh = title_match.group(1)
+            title_en = call_llm(
+                f"Translate this Chinese title to English. Return only the translated title, nothing else:\n\n{title_zh}",
+                api_key, api_base
+            ).strip().strip('"')
+            fm = re.sub(r'title:\s*".+"', f'title: "{title_en}"', fm)
+        
+        # Write translated file
+        with open(dst_file, 'w', encoding='utf-8') as f:
+            f.write(f'---\n{fm}\n---\n{translated}')
+        
+        print(f"Translated: {src_file} -> {dst_file}")
+    except Exception as e:
+        print(f"Translation error: {e}")
 
 
 if __name__ == '__main__':
