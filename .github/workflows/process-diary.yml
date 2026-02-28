@@ -37,7 +37,7 @@ jobs:
       posts_to_process: ${{ steps.detect.outputs.posts_to_process }}
       has_work: ${{ steps.detect.outputs.has_work }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Detect posts needing processing
         id: detect
@@ -100,7 +100,7 @@ jobs:
     if: needs.detect.outputs.has_work == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
 
@@ -199,7 +199,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
           ref: main
