@@ -74,7 +74,7 @@ jobs:
             [ -f "$EN_FILE" ] || MISSING="$MISSING en"
 
             # Check Chinese audio
-            [ -f "static/audio/${BASENAME}.mp3" ] || MISSING="$MISSING audio_zh"
+            [ -f "static/audio/${BASENAME}.zh.mp3" ] || MISSING="$MISSING audio_zh"
 
             # Check English audio
             [ -f "static/audio/${BASENAME}.en.mp3" ] || MISSING="$MISSING audio_en"
@@ -131,7 +131,7 @@ jobs:
 
             EN_FILE="${DIR}/${BASENAME}.en.md"
             COVER_JPG="static/covers/${BASENAME}.jpg"
-            AUDIO_ZH="static/audio/${BASENAME}.mp3"
+            AUDIO_ZH="static/audio/${BASENAME}.zh.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
             # --- 1. Chinese Summary ---
