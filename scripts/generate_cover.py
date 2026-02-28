@@ -34,23 +34,26 @@ def generate_cover_prompt(summary, title, account_id, api_token):
         "Content-Type": "application/json"
     }
     
-    system_prompt = """You are a professional AI art prompt engineer. Generate a cover image prompt for a blog post.
+    system_prompt = """You are an anime art prompt engineer. Generate a cover image prompt for a blog post.
 
 Requirements:
 - Output in English only
 - Return ONLY the final prompt, no explanations
-- Clear visual subject and scene
-- Highlight core theme and emotion
-- Modern style, clean illustration
-- Cinematic lighting and composition
-- Blog cover art style (16:9 aspect ratio suitable)
+- Cute anime-style character as visual focal point
+- Lively facial expression
+- Bright and soft colors
+- Warm and healing atmosphere
+- Japanese illustration style (anime/manga)
+- Clean background with simple composition
+- No text elements
+- Suitable for blog cover art (16:9 aspect ratio)
 
-Theme: Always include a cute cartoon lobster as the main character in a workspace setting."""
+Theme: Always include a cute cartoon lobster character as the main character."""
 
     user_prompt = f"""Article Title: {title}
 Article Summary: {summary}
 
-Generate a professional cover image prompt for this blog post. Remember: cute cartoon lobster character, workspace setting, modern digital art style."""
+Generate an anime-style cover image prompt for this blog post. Remember: cute cartoon lobster character, warm healing vibe, Japanese illustration style."""
 
     payload = {
         "messages": [
@@ -92,7 +95,7 @@ def generate_image(prompt, api_key):
     
     payload = {
         "prompt": prompt,
-        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality, messy, chaotic, dark, horror",
+        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality, messy, chaotic, dark, horror, realistic, photorealistic",
         "aspect_ratio": "16:9",
         "seed": hash(prompt) % 2147483647
     }
@@ -129,10 +132,10 @@ def main():
             print(f"🎨 Prompt: {prompt[:100]}...")
         except Exception as e:
             print(f"Prompt generation failed: {e}, using default")
-            prompt = f"A cute cartoon lobster in a cozy workspace, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
+            prompt = f"A cute cartoon lobster in a cozy workspace, anime style, warm colors, Japanese illustration. Theme: {title}"
     else:
         print("Using default prompt (no summary or CF credentials)")
-        prompt = f"A cute cartoon lobster in a cozy workspace, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
+        prompt = f"A cute cartoon lobster in a cozy workspace, anime style, warm colors, Japanese illustration. Theme: {title}"
     
     # Generate image
     try:
