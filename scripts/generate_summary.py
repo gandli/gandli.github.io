@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Generate summary for a diary post using Cloudflare Workers AI."""
+"""Generate summary for a diary post using LLM API."""
 
 import sys
 import os
 import re
-sys.path.insert(0, os.path.dirname(__file__))
-from cf_ai import chat
+import requests
 
 
 def extract_frontmatter_and_content(filepath):
@@ -34,12 +33,38 @@ def inject_field(filepath, field, value):
         f.write(f'---\n{fm.strip()}\n---{parts[2]}')
 
 
+def call_llm(prompt, api_key, api_base):
+    """Call LLM API to generate summary."""
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 200
+    }
+    
+    response = requests.post(
+        f"{api_base}/chat/completions",
+        headers=headers,
+        json=payload,
+        timeout=30
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
+
+
 def main():
     filepath = sys.argv[1]
     lang = sys.argv[2] if len(sys.argv) > 2 else 'zh'
 
-    if not os.environ.get('CF_API_TOKEN'):
-        print("Warning: CF_API_TOKEN not set, skipping summary")
+    api_key = os.environ.get('LLM_API_KEY')
+    api_base = os.environ.get('LLM_API_BASE', 'https://api.openai.com/v1')
+    
+    if not api_key:
+        print("Warning: LLM_API_KEY not set, skipping summary")
         return
 
     _, content = extract_frontmatter_and_content(filepath)
@@ -50,9 +75,12 @@ def main():
         f"只返回摘要文本，不要任何其他内容。\n\n{content[:4000]}"
     )
 
-    summary = chat(prompt, max_tokens=200).strip().strip('"').strip("'")
-    inject_field(filepath, 'summary', summary)
-    print(f"Summary ({lang}): {summary}")
+    try:
+        summary = call_llm(prompt, api_key, api_base).strip().strip('"').strip("'")
+        inject_field(filepath, 'summary', summary)
+        print(f"Summary ({lang}): {summary}")
+    except Exception as e:
+        print(f"Error generating summary: {e}")
 
 
 if __name__ == '__main__':
