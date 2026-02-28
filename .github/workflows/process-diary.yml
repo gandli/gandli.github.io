@@ -44,14 +44,12 @@ jobs:
         run: |
           FORCE="${{ github.event.inputs.force }}"
 
-          # If specific post given, use it
           if [ -n "${{ github.event.inputs.post_file }}" ]; then
             echo "posts_to_process=${{ github.event.inputs.post_file }}" >> $GITHUB_OUTPUT
             echo "has_work=true" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          # Scan ALL Chinese posts, find those missing assets
           NEEDS_WORK=""
           for POST in content/posts/*.zh.md; do
             BASENAME=$(basename "$POST" .zh.md)
@@ -62,21 +60,11 @@ jobs:
             fi
 
             MISSING=""
-
-            # Check summary in frontmatter
             grep -q '^summary:' "$POST" || MISSING="summary"
-
-            # Check cover image
             [ -f "static/covers/${BASENAME}.jpg" ] || MISSING="$MISSING cover"
-
-            # Check English version
             EN_FILE="content/posts/${BASENAME}.en.md"
             [ -f "$EN_FILE" ] || MISSING="$MISSING en"
-
-            # Check Chinese audio
             [ -f "static/audio/${BASENAME}.zh.mp3" ] || MISSING="$MISSING audio_zh"
-
-            # Check English audio
             [ -f "static/audio/${BASENAME}.en.mp3" ] || MISSING="$MISSING audio_en"
 
             if [ -n "$MISSING" ]; then
@@ -117,11 +105,11 @@ jobs:
           wget -q -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
           sudo dpkg -i /tmp/hugo.deb
 
-      - name: Process each post (skip existing assets)
+      - name: Process each post
         env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_API_BASE: ${{ secrets.LLM_API_BASE }}
           FORCE: ${{ github.event.inputs.force }}
         run: |
           for POST_FILE in ${{ needs.detect.outputs.posts_to_process }}; do
@@ -135,28 +123,28 @@ jobs:
             AUDIO_ZH="static/audio/${BASENAME}.zh.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
-            # --- 1. Chinese Summary ---
+            # --- 1. Summary (Cloudflare AI) ---
             if [ "$FORCE" = "true" ] || ! grep -q '^summary:' "$POST_FILE"; then
-              echo "📝 Generating Chinese summary..."
+              echo "📝 Generating summary..."
               python3 scripts/generate_summary.py "$POST_FILE" zh
             else
               echo "⏭️ Summary exists"
             fi
 
-            # --- 2. Cover Image (NVIDIA SD3 Medium) ---
+            # --- 2. Cover (NVIDIA SD3) ---
             if [ "$FORCE" = "true" ] || ! [ -f "$COVER_JPG" ]; then
-              echo "🎨 Generating cover (NVIDIA SD3)..."
+              echo "🎨 Generating cover..."
               python3 scripts/generate_cover.py "$POST_FILE" || echo "⚠️ Cover failed"
             else
               echo "⏭️ Cover exists"
             fi
 
-            # --- 3. English Translation ---
+            # --- 3. Translation (Cloudflare AI) ---
             if [ "$FORCE" = "true" ] || ! [ -f "$EN_FILE" ]; then
-              echo "🌐 Translating to English..."
+              echo "🌐 Translating..."
               python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
             else
-              echo "⏭️ English version exists"
+              echo "⏭️ Translation exists"
             fi
 
             # --- 4. Chinese Audio ---
@@ -188,7 +176,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🦞 Auto-process: summary, cover, translation, audio [NVIDIA SD3]"
+            git commit -m "🦞 Auto-process: summary, cover, translation, audio"
             git pull --rebase origin main && git push
           fi
 
