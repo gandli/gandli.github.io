@@ -31,7 +31,7 @@ def main():
     title_match = re.search(r'title:\s*"(.+)"', frontmatter)
     title_zh = title_match.group(1) if title_match else "Untitled"
     tags_match = re.search(r'tags:\s*\[(.+)\]', frontmatter)
-    tags = tags_match.group(0) if tags_match else 'tags: []'
+    tags_zh = tags_match.group(1) if tags_match else ''
     date_match = re.search(r'date:\s*(.+)', frontmatter)
     date = date_match.group(1) if date_match else ''
     cover_match = re.search(r'cover:\s*(.+)', frontmatter)
@@ -45,6 +45,14 @@ def main():
         f'Translate this blog title to English. Keep "Day N" format if present. Return ONLY the title:\n{title_zh}',
         max_tokens=100
     ).strip().strip('"').strip("'")
+
+    # Translate tags
+    tags_en = ''
+    if tags_zh:
+        tags_en = chat(
+            f"Translate these tags to English, comma-separated. Return ONLY the tags list:\n{tags_zh}",
+            max_tokens=100
+        ).strip()
 
     # Translate content (chunk if long)
     translated = chat(
@@ -64,13 +72,14 @@ Return ONLY the translated Markdown body, no frontmatter.""",
     ).strip().strip('"').strip("'")
 
     # Write English post
+    tags_line = f'tags: [{tags_en}]' if tags_en else 'tags: []'
     en_post = f"""---
 title: "{title_en}"
 date: {date}
 draft: false
 author: "Lobster 🦞"
 categories: ["diary"]
-{tags}
+{tags_line}
 summary: "{summary_en}"{cover}
 ---
 
