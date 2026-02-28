@@ -95,11 +95,10 @@ def main():
     size = os.path.getsize(output_mp3)
     print(f"Audio ({lang}): {output_mp3} ({size} bytes, voice={voice})")
 
-    # Inject postAudio into frontmatter for Chinese audio
-    if lang == "zh":
-        audio_public_path = output_mp3.replace('static/', '/')
-        inject_post_audio(post_file, audio_public_path)
-        print(f"Injected postAudio: {audio_public_path}")
+    # Inject postAudio into frontmatter (for both Chinese and English)
+    audio_public_path = output_mp3.replace('static/', '/')
+    inject_post_audio(post_file, audio_public_path)
+    print(f"Injected postAudio: {audio_public_path}")
 
 
 if __name__ == '__main__':

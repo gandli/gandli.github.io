@@ -35,7 +35,10 @@ def main():
     date_match = re.search(r'date:\s*(.+)', frontmatter)
     date = date_match.group(1) if date_match else ''
     cover_match = re.search(r'cover:\s*(.+)', frontmatter)
-    cover = f'\ncover: {cover_match.group(1)}' if cover_match else ''
+    cover_path = cover_match.group(1) if cover_match else ''
+    # Strip .zh from cover path if present (covers are language-neutral)
+    cover_path = re.sub(r'\.zh\.(jpg|png|webp)$', r'.\1', cover_path)
+    cover = f'\ncover: {cover_path}' if cover_path else ''
 
     # Translate title
     title_en = chat(
