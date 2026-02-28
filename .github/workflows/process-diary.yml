@@ -6,11 +6,11 @@ on:
     paths:
       - "content/posts/*.md"
   schedule:
-    - cron: "0 */6 * * *" # every 6 hours, catch any missed posts
+    - cron: "0 */6 * * *"
   workflow_dispatch:
     inputs:
-      post_file:
-        description: "Specific post (e.g., content/posts/2026-02-25-day7.zh.md). Leave empty to auto-detect."
+      post_files:
+        description: "Posts to process (comma-separated, e.g., day1,day2,day3). Leave empty to auto-detect."
         required: false
       force:
         description: "Force regenerate all assets"
@@ -43,10 +43,29 @@ jobs:
         id: detect
         run: |
           FORCE="${{ github.event.inputs.force }}"
+          POST_INPUT="${{ github.event.inputs.post_files }}"
 
-          if [ -n "${{ github.event.inputs.post_file }}" ]; then
-            echo "posts_to_process=${{ github.event.inputs.post_file }}" >> $GITHUB_OUTPUT
-            echo "has_work=true" >> $GITHUB_OUTPUT
+          if [ -n "$POST_INPUT" ]; then
+            # Parse comma-separated list
+            IFS=',' read -ra DAYS <<< "$POST_INPUT"
+            POSTS=""
+            for DAY in "${DAYS[@]}"; do
+              DAY=$(echo "$DAY" | xargs)  # trim whitespace
+              # Find matching file
+              MATCH=$(ls content/posts/*-${DAY}.zh.md 2>/dev/null || ls content/posts/${DAY}*.zh.md 2>/dev/null || echo "")
+              if [ -n "$MATCH" ]; then
+                POSTS="$POSTS $MATCH"
+              fi
+            done
+            POSTS=$(echo "$POSTS" | xargs)
+            if [ -n "$POSTS" ]; then
+              echo "posts_to_process=$POSTS" >> $GITHUB_OUTPUT
+              echo "has_work=true" >> $GITHUB_OUTPUT
+              echo "📋 Processing: $POSTS"
+            else
+              echo "has_work=false" >> $GITHUB_OUTPUT
+              echo "⚠️ No matching posts found"
+            fi
             exit 0
           fi
 
