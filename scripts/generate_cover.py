@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate cover image for a diary post using NVIDIA API."""
+"""Generate cover image for a diary post using NVIDIA API with AI-generated prompts."""
 
 import sys
 import os
@@ -8,16 +8,65 @@ import json
 import base64
 import requests
 
-def extract_title_and_tags(filepath):
+
+def extract_summary(filepath):
+    """Extract summary from frontmatter."""
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
-    title_match = re.search(r'title:\s*"(.+)"', text)
-    tags_match = re.search(r'tags:\s*\[(.+)\]', text)
-    title = title_match.group(1) if title_match else "Lobster Diary"
-    tags = tags_match.group(1) if tags_match else ""
-    return title, tags
+    match = re.search(r'summary:\s*"(.+)"', text)
+    return match.group(1) if match else None
+
+
+def extract_title(filepath):
+    """Extract title from frontmatter."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        text = f.read()
+    match = re.search(r'title:\s*"(.+)"', text)
+    return match.group(1) if match else "Lobster Diary"
+
+
+def generate_cover_prompt(summary, title, account_id, api_token):
+    """Use Cloudflare AI to generate a professional cover image prompt."""
+    url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-3.1-8b-instruct"
+    
+    headers = {
+        "Authorization": f"Bearer {api_token}",
+        "Content-Type": "application/json"
+    }
+    
+    system_prompt = """You are a professional AI art prompt engineer. Generate a cover image prompt for a blog post.
+
+Requirements:
+- Output in English only
+- Return ONLY the final prompt, no explanations
+- Clear visual subject and scene
+- Highlight core theme and emotion
+- Modern style, clean illustration
+- Cinematic lighting and composition
+- Blog cover art style (16:9 aspect ratio suitable)
+
+Theme: Always include a cute cartoon lobster as the main character in a workspace setting."""
+
+    user_prompt = f"""Article Title: {title}
+Article Summary: {summary}
+
+Generate a professional cover image prompt for this blog post. Remember: cute cartoon lobster character, workspace setting, modern digital art style."""
+
+    payload = {
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "max_tokens": 200
+    }
+    
+    response = requests.post(url, headers=headers, json=payload, timeout=60)
+    response.raise_for_status()
+    return response.json()["result"]["response"].strip()
+
 
 def inject_cover(filepath, cover_path):
+    """Inject or update cover field in frontmatter."""
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
     parts = text.split('---', 2)
@@ -30,24 +79,9 @@ def inject_cover(filepath, cover_path):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(text)
 
-def main():
-    filepath = sys.argv[1]
-    api_key = os.environ.get('NVIDIA_API_KEY')
-    
-    if not api_key:
-        print("Warning: NVIDIA_API_KEY not set, skipping cover generation")
-        return
-    
-    title, tags = extract_title_and_tags(filepath)
-    
-    # Get basename without language suffix (e.g., 2026-02-27-day9.zh.md -> 2026-02-27-day9)
-    basename = os.path.splitext(os.path.basename(filepath))[0]
-    basename = re.sub(r'\.(zh|en)$', '', basename)  # Remove .zh or .en suffix
-    
-    # Generate image prompt from title
-    prompt = f"A cute cartoon lobster in a cozy workspace with laptop, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
-    
-    # Call NVIDIA Stable Diffusion 3 Medium API
+
+def generate_image(prompt, api_key):
+    """Generate image using NVIDIA Stable Diffusion 3 Medium."""
     url = "https://ai.api.nvidia.com/v1/genai/stabilityai/stable-diffusion-3-medium"
     
     headers = {
@@ -58,15 +92,52 @@ def main():
     
     payload = {
         "prompt": prompt,
-        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality",
+        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality, messy, chaotic, dark, horror",
         "aspect_ratio": "16:9",
-        "seed": hash(basename) % 2147483647
+        "seed": hash(prompt) % 2147483647
     }
     
+    response = requests.post(url, headers=headers, json=payload, timeout=120)
+    response.raise_for_status()
+    return response.json()
+
+
+def main():
+    filepath = sys.argv[1]
+    
+    nvidia_key = os.environ.get('NVIDIA_API_KEY')
+    cf_account = os.environ.get('CF_ACCOUNT_ID')
+    cf_token = os.environ.get('CF_API_TOKEN')
+    
+    if not nvidia_key:
+        print("Warning: NVIDIA_API_KEY not set, skipping cover generation")
+        return
+    
+    # Get basename without language suffix
+    basename = os.path.splitext(os.path.basename(filepath))[0]
+    basename = re.sub(r'\.(zh|en)$', '', basename)
+    
+    # Extract article info
+    summary = extract_summary(filepath)
+    title = extract_title(filepath)
+    
+    # Generate professional prompt
+    if summary and cf_account and cf_token:
+        print(f"📝 Generating prompt for: {title[:50]}...")
+        try:
+            prompt = generate_cover_prompt(summary, title, cf_account, cf_token)
+            print(f"🎨 Prompt: {prompt[:100]}...")
+        except Exception as e:
+            print(f"Prompt generation failed: {e}, using default")
+            prompt = f"A cute cartoon lobster in a cozy workspace, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
+    else:
+        print("Using default prompt (no summary or CF credentials)")
+        prompt = f"A cute cartoon lobster in a cozy workspace, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
+    
+    # Generate image
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=120)
-        response.raise_for_status()
-        data = response.json()
+        print("🖼️ Generating cover image...")
+        data = generate_image(prompt, nvidia_key)
         
         if "image" in data:
             img_data = base64.b64decode(data["image"])
@@ -78,22 +149,12 @@ def main():
             
             cover_url = f"/covers/{basename}.jpg"
             inject_cover(filepath, cover_url)
-            print(f"Cover generated: {cover_file}")
-        elif "artifacts" in data and len(data["artifacts"]) > 0:
-            img_data = base64.b64decode(data["artifacts"][0]["base64"])
-            cover_dir = "static/covers"
-            os.makedirs(cover_dir, exist_ok=True)
-            cover_file = f"{cover_dir}/{basename}.jpg"
-            with open(cover_file, 'wb') as f:
-                f.write(img_data)
-            
-            cover_url = f"/covers/{basename}.jpg"
-            inject_cover(filepath, cover_url)
-            print(f"Cover generated: {cover_file}")
+            print(f"✅ Cover generated: {cover_file}")
         else:
-            print("No image generated from API response")
+            print(f"No image generated: {data}")
     except Exception as e:
         print(f"Cover generation error: {e}")
+
 
 if __name__ == '__main__':
     main()
