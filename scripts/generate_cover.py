@@ -20,12 +20,13 @@ def extract_title_and_tags(filepath):
 def inject_cover(filepath, cover_path):
     with open(filepath, 'r', encoding='utf-8') as f:
         text = f.read()
-    if 'cover:' in text.split('---')[1] if '---' in text else '':
-        text = re.sub(r'cover:.*', f'cover: {cover_path}', text, count=1)
-    else:
-        parts = text.split('---', 2)
-        if len(parts) >= 3:
-            text = f'---\n{parts[1].strip()}\ncover: {cover_path}\n---{parts[2]}'
+    parts = text.split('---', 2)
+    if len(parts) >= 3 and 'cover:' in parts[1]:
+        parts[1] = re.sub(r'cover:.*', f'cover: {cover_path}', parts[1], count=1)
+        text = '---' + parts[1] + '---' + parts[2]
+    elif len(parts) >= 3:
+        parts[1] = parts[1].rstrip() + f'\ncover: {cover_path}\n'
+        text = '---' + parts[1] + '---' + parts[2]
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(text)
 
@@ -38,12 +39,15 @@ def main():
         return
     
     title, tags = extract_title_and_tags(filepath)
+    
+    # Get basename without language suffix (e.g., 2026-02-27-day9.zh.md -> 2026-02-27-day9)
     basename = os.path.splitext(os.path.basename(filepath))[0]
+    basename = re.sub(r'\.(zh|en)$', '', basename)  # Remove .zh or .en suffix
     
     # Generate image prompt from title
     prompt = f"A cute cartoon lobster in a cozy workspace with laptop, digital art style. Theme: {title}. Warm colors, clean illustration, blog cover art."
     
-    # Call NVIDIA Stable Diffusion 3 Medium API (faster and more reliable than SDXL)
+    # Call NVIDIA Stable Diffusion 3 Medium API
     url = "https://ai.api.nvidia.com/v1/genai/stabilityai/stable-diffusion-3-medium"
     
     headers = {
@@ -52,12 +56,11 @@ def main():
         "Accept": "application/json"
     }
     
-    # SD3 Medium uses different payload format than SDXL
     payload = {
         "prompt": prompt,
         "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality",
         "aspect_ratio": "16:9",
-        "seed": hash(basename) % 2147483647  # Deterministic seed based on filename
+        "seed": hash(basename) % 2147483647
     }
     
     try:
@@ -65,7 +68,6 @@ def main():
         response.raise_for_status()
         data = response.json()
         
-        # SD3 returns image directly in 'image' field as base64
         if "image" in data:
             img_data = base64.b64decode(data["image"])
             cover_dir = "static/covers"
@@ -74,12 +76,10 @@ def main():
             with open(cover_file, 'wb') as f:
                 f.write(img_data)
             
-            # Inject cover path into frontmatter
             cover_url = f"/covers/{basename}.jpg"
             inject_cover(filepath, cover_url)
             print(f"Cover generated: {cover_file}")
         elif "artifacts" in data and len(data["artifacts"]) > 0:
-            # Fallback for SDXL-style response
             img_data = base64.b64decode(data["artifacts"][0]["base64"])
             cover_dir = "static/covers"
             os.makedirs(cover_dir, exist_ok=True)
@@ -92,10 +92,8 @@ def main():
             print(f"Cover generated: {cover_file}")
         else:
             print("No image generated from API response")
-            print(f"Response: {data}")
     except Exception as e:
         print(f"Cover generation error: {e}")
-        print("Using default cover or no cover")
 
 if __name__ == '__main__':
     main()
