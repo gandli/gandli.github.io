@@ -25,7 +25,20 @@ def extract_title(filepath):
     return match.group(1) if match else "Lobster Diary"
 
 
-def generate_cover_prompt(summary, title, account_id, api_token):
+def extract_content(filepath, max_chars=2000):
+    """Extract content for context."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        text = f.read()
+    # Remove frontmatter
+    parts = text.split('---', 2)
+    if len(parts) >= 3:
+        content = parts[2]
+    else:
+        content = text
+    return content[:max_chars]
+
+
+def generate_cover_prompt(summary, title, content, account_id, api_token):
     """Use Cloudflare AI to generate a professional cover image prompt."""
     url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-3.1-8b-instruct"
     
@@ -34,33 +47,56 @@ def generate_cover_prompt(summary, title, account_id, api_token):
         "Content-Type": "application/json"
     }
     
-    system_prompt = """You are an anime art prompt engineer. Generate a cover image prompt for a blog post.
+    system_prompt = """You are a professional AI art prompt engineer specializing in anime-style illustration prompts for blog covers.
 
-Requirements:
-- Output in English only
-- Return ONLY the final prompt, no explanations
-- Cute anime-style character as visual focal point
-- Lively facial expression
-- Bright and soft colors
-- Warm and healing atmosphere
-- Japanese illustration style (anime/manga)
-- Clean background with simple composition
-- No text elements
-- Suitable for blog cover art (16:9 aspect ratio)
+Your task: Generate a detailed, evocative image prompt based on the article's content.
 
-Theme: Always include a cute cartoon lobster character as the main character."""
+## Output Requirements
+- Output in English ONLY
+- Return ONLY the final prompt, no explanations or introductions
+- Prompt length: 80-150 words
+
+## Visual Style
+- Anime/ manga illustration style
+- Cute cartoon lobster as the MAIN CHARACTER (always include)
+- Warm, healing atmosphere
+- Bright and soft color palette (pastels, warm tones)
+- Clean, uncluttered composition
+- No text elements in the image
+- 16:9 aspect ratio suitable for blog cover
+
+## Prompt Structure
+1. **Main Character**: Describe the lobster's appearance, expression, and pose
+2. **Setting**: Specific environment matching the article theme
+3. **Mood**: Emotional atmosphere (curious, determined, peaceful, excited, etc.)
+4. **Lighting**: Time of day, light quality, shadows
+5. **Details**: Key objects or symbols from the article
+6. **Style Tags**: Anime style, soft rendering, clean lines
+
+## Example Output
+"A cute anime-style cartoon lobster with a curious expression, wearing tiny glasses, sitting at a modern desk with floating holographic screens showing code. The room is bathed in warm afternoon sunlight streaming through a window with plants. Soft pastel colors, healing atmosphere. The lobster holds a tiny coffee cup, looking thoughtful. Japanese illustration style, clean background, soft shadows, 16:9 aspect ratio."
+
+Remember: Always create a specific, vivid scene that reflects the article's content, not a generic illustration."""
 
     user_prompt = f"""Article Title: {title}
+
 Article Summary: {summary}
 
-Generate an anime-style cover image prompt for this blog post. Remember: cute cartoon lobster character, warm healing vibe, Japanese illustration style."""
+Article Content (excerpt): {content[:1000]}
+
+Generate a detailed anime-style cover image prompt for this blog post. The prompt should:
+1. Feature a cute cartoon lobster as the main character
+2. Reflect the article's theme and mood
+3. Include specific visual details from the content
+4. Create a warm, healing atmosphere
+5. Be suitable for a blog cover (16:9)"""
 
     payload = {
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ],
-        "max_tokens": 200
+        "max_tokens": 250
     }
     
     response = requests.post(url, headers=headers, json=payload, timeout=60)
@@ -95,7 +131,7 @@ def generate_image(prompt, api_key):
     
     payload = {
         "prompt": prompt,
-        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality, messy, chaotic, dark, horror, realistic, photorealistic",
+        "negative_prompt": "blurry, ugly, distorted, text, watermark, low quality, messy, chaotic, dark, horror, realistic, photorealistic, gritty, violent, scary",
         "aspect_ratio": "16:9",
         "seed": hash(prompt) % 2147483647
     }
@@ -123,13 +159,15 @@ def main():
     # Extract article info
     summary = extract_summary(filepath)
     title = extract_title(filepath)
+    content = extract_content(filepath)
     
     # Generate professional prompt
     if summary and cf_account and cf_token:
-        print(f"📝 Generating prompt for: {title[:50]}...")
+        print(f"📝 Generating prompt for: {title}")
         try:
-            prompt = generate_cover_prompt(summary, title, cf_account, cf_token)
-            print(f"🎨 Prompt: {prompt[:100]}...")
+            prompt = generate_cover_prompt(summary, title, content, cf_account, cf_token)
+            print(f"🎨 Prompt: {prompt}")
+            print("-" * 50)
         except Exception as e:
             print(f"Prompt generation failed: {e}, using default")
             prompt = f"A cute cartoon lobster in a cozy workspace, anime style, warm colors, Japanese illustration. Theme: {title}"
