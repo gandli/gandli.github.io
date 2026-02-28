@@ -43,6 +43,9 @@ def main():
 
     title, tags = extract_title_and_tags(filepath)
     basename = os.path.splitext(os.path.basename(filepath))[0]
+    # Strip language suffix (.zh, .en) from basename
+    if basename.endswith('.zh') or basename.endswith('.en'):
+        basename = basename.rsplit('.', 1)[0]
 
     prompt = (
         f"A cute cartoon lobster character in a cozy workspace, digital illustration, "
