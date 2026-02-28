@@ -56,11 +56,33 @@ def main():
         os.makedirs(cover_dir, exist_ok=True)
         cover_file = f"{cover_dir}/{basename}.jpg"
 
-        # Convert to JPG at 1344x768
+        # Convert to JPG at 1344x768 (16:9), crop to maintain aspect ratio
         try:
             from PIL import Image
             img = Image.open(io.BytesIO(img_bytes))
-            img = img.convert('RGB').resize((1344, 768), Image.LANCZOS)
+            img = img.convert('RGB')
+            
+            # Target size and aspect ratio
+            target_w, target_h = 1344, 768
+            target_ratio = target_w / target_h  # 16:9
+            
+            # Calculate crop dimensions to maintain aspect ratio
+            w, h = img.size
+            current_ratio = w / h
+            
+            if current_ratio > target_ratio:
+                # Image is wider, crop width
+                new_w = int(h * target_ratio)
+                left = (w - new_w) // 2
+                img = img.crop((left, 0, left + new_w, h))
+            elif current_ratio < target_ratio:
+                # Image is taller, crop height
+                new_h = int(w / target_ratio)
+                top = (h - new_h) // 2
+                img = img.crop((0, top, w, top + new_h))
+            # else: already correct ratio
+            
+            img = img.resize((target_w, target_h), Image.LANCZOS)
             img.save(cover_file, 'JPEG', quality=90)
         except ImportError:
             # Fallback: save raw bytes if Pillow not available
