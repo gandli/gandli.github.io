@@ -24,13 +24,14 @@ Every day at 3:00 AM, the AI lobster (OpenClaw) reviews all conversations with t
 
 ### 4.2 GitHub Actions (Producer)
 - Triggered by push event
-- Generates Chinese summary
-- Generates cover image (NVIDIA free tier)
-- Translates to English version + English summary
+- Generates Chinese summary (Cloudflare AI)
+- Generates professional cover prompt (Cloudflare AI)
+- Renders cover image (NVIDIA SD3 Medium)
+- Translates to English version (Cloudflare AI)
 - Generates Chinese full-text audio (Edge TTS)
 - Generates English full-text audio (Edge TTS)
 - Builds static site
-- Deploys to Cloudflare Pages
+- Deploys to GitHub Pages
 
 ## 5. Output Per Article
 
@@ -43,7 +44,7 @@ Every day at 3:00 AM, the AI lobster (OpenClaw) reviews all conversations with t
 | Cover image | Shared (AI-generated) | Shared |
 | Tags | ✅ | ✅ |
 
-**File naming:** `YYYY-MM-DD-dayN.md` / `YYYY-MM-DD-dayN-en.md`
+**File naming:** `YYYY-MM-DD-dayN.zh.md` / `YYYY-MM-DD-dayN.en.md`
 
 ## 6. Technical Architecture
 
@@ -55,12 +56,13 @@ GitHub Repository (Markdown)
     │
     ▼
 GitHub Actions Pipeline
-    ├── Summary generation (LLM)
-    ├── Cover image (NVIDIA API)
-    ├── Translation (LLM)
+    ├── Summary generation (Cloudflare AI)
+    ├── Cover prompt (Cloudflare AI)
+    ├── Cover image (NVIDIA SD3 Medium)
+    ├── Translation (Cloudflare AI)
     ├── Audio (Edge TTS × 2)
     ├── Static site build (Hugo)
-    └── Deploy (Cloudflare Pages)
+    └── Deploy (GitHub Pages)
 ```
 
 ## 7. Cost Analysis
@@ -68,10 +70,11 @@ GitHub Actions Pipeline
 | Resource | Solution | Cost |
 |----------|----------|------|
 | Article generation | OpenClaw existing LLM | Included |
-| Cover image | NVIDIA free tier | Free |
+| Summary/Translation | Cloudflare Workers AI | Free tier |
+| Cover prompt | Cloudflare Workers AI | Free tier |
+| Cover image | NVIDIA SD3 Medium | Free tier |
 | Audio | Edge TTS | Free |
-| Translation + Summary | LLM in GitHub Actions | Minimal |
-| Hosting | Cloudflare Pages | Free |
+| Hosting | GitHub Pages | Free |
 
 ## 8. Differentiation
 
@@ -79,9 +82,17 @@ GitHub Actions Pipeline
 - **Real interaction data** — every article is unique and authentic
 - **Lobster IP** 🦞 — memorable and distinctive branding
 - **Bilingual + Audio** — reaches both Chinese and English audiences
+- **Professional AI cover art** — Cloudflare AI generates prompts, NVIDIA renders
 
 ## 9. Success Metrics
 
-- Daily article consistency > 95%
-- Monthly unique visitors > 1,000 (within 3 months)
-- RSS subscribers > 100
+- Daily article published (automated)
+- Zero manual intervention required
+- Cover art quality and relevance
+- Audio quality and naturalness
+
+## 10. Version History
+
+- **v1.0** — Initial launch with Cloudflare AI for all tasks
+- **v1.1** — Migrated cover generation to NVIDIA SD3 Medium
+- **v1.2** — Added professional AI-generated cover prompts
