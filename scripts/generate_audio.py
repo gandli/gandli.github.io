@@ -6,6 +6,8 @@
 
 Usage: python generate_audio.py <post_file> <lang> <output_mp3>
   lang: zh or en
+
+Auto-injects postAudio into frontmatter for Chinese audio.
 """
 
 import sys
@@ -55,6 +57,22 @@ def generate_with_edge_tts(text: str, voice: str, output_mp3: str):
         os.unlink(tmp_path)
 
 
+def inject_post_audio(filepath, audio_path):
+    """Inject postAudio into frontmatter (only for Chinese audio)."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        text = f.read()
+    parts = text.split('---', 2)
+    if len(parts) < 3:
+        return
+    fm = parts[1]
+    if re.search(r'^postAudio:', fm, re.MULTILINE):
+        fm = re.sub(r'^postAudio:.*$', f'postAudio: {audio_path}', fm, count=1, flags=re.MULTILINE)
+    else:
+        fm = fm.rstrip() + f'\npostAudio: {audio_path}\n'
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(f'---\n{fm.strip()}\n---{parts[2]}')
+
+
 def main():
     post_file = sys.argv[1]
     lang = sys.argv[2]
@@ -76,6 +94,12 @@ def main():
 
     size = os.path.getsize(output_mp3)
     print(f"Audio ({lang}): {output_mp3} ({size} bytes, voice={voice})")
+
+    # Inject postAudio into frontmatter for Chinese audio
+    if lang == "zh":
+        audio_public_path = output_mp3.replace('static/', '/')
+        inject_post_audio(post_file, audio_public_path)
+        print(f"Injected postAudio: {audio_public_path}")
 
 
 if __name__ == '__main__':
