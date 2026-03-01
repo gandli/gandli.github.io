@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Translate a Chinese diary post to English using LLM API."""
+"""Translate a Chinese diary post to English using Cloudflare Workers AI."""
 
 import sys
 import os
@@ -16,38 +16,34 @@ def extract_frontmatter_and_content(filepath):
     return '', text
 
 
-def call_llm(prompt, api_key, api_base):
-    """Call LLM API."""
+def call_cf_ai(prompt, account_id, api_token):
+    """Call Cloudflare Workers AI."""
+    url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/meta/llama-3.1-8b-instruct"
+    
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": f"Bearer {api_token}",
         "Content-Type": "application/json"
     }
     
     payload = {
-        "model": "gpt-4o-mini",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 4096
     }
     
-    response = requests.post(
-        f"{api_base}/chat/completions",
-        headers=headers,
-        json=payload,
-        timeout=60
-    )
+    response = requests.post(url, headers=headers, json=payload, timeout=120)
     response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"]
+    return response.json()["result"]["response"]
 
 
 def main():
     src_file = sys.argv[1]
     dst_file = sys.argv[2] if len(sys.argv) > 2 else src_file.replace('.zh.md', '.en.md')
 
-    api_key = os.environ.get('LLM_API_KEY')
-    api_base = os.environ.get('LLM_API_BASE', 'https://api.openai.com/v1')
+    account_id = os.environ.get('CF_ACCOUNT_ID')
+    api_token = os.environ.get('CF_API_TOKEN')
     
-    if not api_key:
-        print("Warning: LLM_API_KEY not set, skipping translation")
+    if not account_id or not api_token:
+        print("Warning: CF_ACCOUNT_ID or CF_API_TOKEN not set, skipping translation")
         return
 
     fm, content = extract_frontmatter_and_content(src_file)
@@ -61,15 +57,15 @@ def main():
     )
 
     try:
-        translated = call_llm(prompt, api_key, api_base)
+        translated = call_cf_ai(prompt, account_id, api_token)
         
         # Translate title in frontmatter
         title_match = re.search(r'title:\s*"(.+)"', fm)
         if title_match:
             title_zh = title_match.group(1)
-            title_en = call_llm(
+            title_en = call_cf_ai(
                 f"Translate this Chinese title to English. Return only the translated title, nothing else:\n\n{title_zh}",
-                api_key, api_base
+                account_id, api_token
             ).strip().strip('"')
             fm = re.sub(r'title:\s*".+"', f'title: "{title_en}"', fm)
         
