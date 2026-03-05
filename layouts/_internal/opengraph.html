@@ -1,0 +1,27 @@
+<!-- Custom OpenGraph template to fix postAudio issue -->
+{{- with $.Params.images }}
+{{- range first 6 . }}
+<meta property="og:image" content="{{ . | absURL }}" />
+{{- end }}
+{{- else }}
+{{- with $.Site.Params.images }}
+{{- range first 6 . }}
+<meta property="og:image" content="{{ . | absURL }}" />
+{{- end }}
+{{- else }}
+{{- with $.Site.Params.title }}
+<meta property="og:image" content="{{ printf "https://www.google.com/s2/favicons?domain=%s&sz=256" (urls.Parse $.Permalink).Host | absURL }}" />
+{{- end }}
+{{- end }}
+{{- end }}
+
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+
+{{- if .IsPage }}
+{{- with .Params.audio }}
+<meta property="og:audio" content="{{ . | absURL }}" />
+{{- end }}
+{{- end }}
