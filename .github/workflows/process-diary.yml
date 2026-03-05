@@ -168,18 +168,19 @@ jobs:
 
             # --- 4. Translation (Cloudflare AI) ---
             if [ "$FORCE" = "true" ] || ! [ -f "$EN_FILE" ]; then
-              echo "🌐 Translating..."
+              echo "🌐 Translating article and summary..."
               python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
-              # --- 4a. Insert cover into English file ---
-              if [ -f "$EN_FILE" ] && [ -f "$COVER_JPG" ]; then
-                echo "🖼️ Inserting cover into English file..."
-                sed -i '' "s|cover: .*|cover: /covers/${BASENAME}.jpg|" "$EN_FILE"
-              fi
             else
               echo "⏭️ Translation exists"
             fi
 
-            # --- 5. English Audio ---
+            # --- 5. Insert cover into English file ---
+            if [ -f "$EN_FILE" ] && [ -f "$COVER_JPG" ]; then
+              echo "🖼️ Inserting cover into English file..."
+              sed -i '' "s|cover: .*|cover: /covers/${BASENAME}.jpg|" "$EN_FILE"
+            fi
+
+            # --- 6. English Audio ---
             if [ "$FORCE" = "true" ] || ! [ -f "$AUDIO_EN" ]; then
               if [ -f "$EN_FILE" ]; then
                 echo "🔊 English audio..."
