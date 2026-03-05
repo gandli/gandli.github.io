@@ -142,12 +142,12 @@ jobs:
             AUDIO_ZH="static/audio/${BASENAME}.zh.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
-            # --- 1. Summary (Cloudflare AI) ---
+            # --- 1. Chinese Summary ---
             if [ "$FORCE" = "true" ] || ! grep -q '^summary:' "$POST_FILE"; then
-              echo "📝 Generating summary..."
+              echo "📝 Generating Chinese summary..."
               python3 scripts/generate_summary.py "$POST_FILE" zh
             else
-              echo "⏭️ Summary exists"
+              echo "⏭️ Chinese summary exists"
             fi
 
             # --- 2. Cover (NVIDIA SD3) ---
@@ -158,15 +158,7 @@ jobs:
               echo "⏭️ Cover exists"
             fi
 
-            # --- 3. Translation (Cloudflare AI) ---
-            if [ "$FORCE" = "true" ] || ! [ -f "$EN_FILE" ]; then
-              echo "🌐 Translating..."
-              python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
-            else
-              echo "⏭️ Translation exists"
-            fi
-
-            # --- 4. Chinese Audio ---
+            # --- 3. Chinese Audio ---
             if [ "$FORCE" = "true" ] || ! [ -f "$AUDIO_ZH" ]; then
               echo "🔊 Chinese audio..."
               python3 scripts/generate_audio.py "$POST_FILE" zh "$AUDIO_ZH" || echo "⚠️ Chinese TTS failed"
@@ -174,7 +166,21 @@ jobs:
               echo "⏭️ Chinese audio exists"
             fi
 
-            # --- 5. English Audio ---
+            # --- 4. Translation (Cloudflare AI) ---
+            if [ "$FORCE" = "true" ] || ! [ -f "$EN_FILE" ]; then
+              echo "🌐 Translating article and summary..."
+              python3 scripts/translate_post.py "$POST_FILE" "$EN_FILE"
+            else
+              echo "⏭️ Translation exists"
+            fi
+
+            # --- 5. Insert cover into English file ---
+            if [ -f "$EN_FILE" ] && [ -f "$COVER_JPG" ]; then
+              echo "🖼️ Inserting cover into English file..."
+              sed -i '' "s|cover: .*|cover: /covers/${BASENAME}.jpg|" "$EN_FILE"
+            fi
+
+            # --- 6. English Audio ---
             if [ "$FORCE" = "true" ] || ! [ -f "$AUDIO_EN" ]; then
               if [ -f "$EN_FILE" ]; then
                 echo "🔊 English audio..."
