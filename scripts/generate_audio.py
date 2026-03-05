@@ -73,6 +73,27 @@ def inject_post_audio(filepath, audio_path):
         f.write(f'---\n{fm.strip()}\n---{parts[2]}')
 
 
+def inject_audio_field(filepath, audio_path):
+    """Inject audio field into frontmatter for both Chinese and English."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        text = f.read()
+    parts = text.split('---', 2)
+    if len(parts) < 3:
+        return
+    fm = parts[1]
+    # Check if audio field already exists
+    if re.search(r'^audio:', fm, re.MULTILINE):
+        fm = re.sub(r'^audio:.*$', f'audio: {audio_path}', fm, count=1, flags=re.MULTILINE)
+    else:
+        # Insert audio field after cover if it exists, otherwise at the end
+        if 'cover:' in fm:
+            fm = re.sub(r'(cover: [^\n]+)', r'\1\naudio: ' + audio_path, fm, count=1)
+        else:
+            fm = fm.rstrip() + f'\naudio: {audio_path}\n'
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(f'---\n{fm.strip()}\n---{parts[2]}')
+
+
 def main():
     post_file = sys.argv[1]
     lang = sys.argv[2]
@@ -99,6 +120,11 @@ def main():
     audio_public_path = output_mp3.replace('static/', '/')
     inject_post_audio(post_file, audio_public_path)
     print(f"Injected postAudio: {audio_public_path}")
+    
+    # Also inject audio field for proper Hugo template support
+    if lang == "zh":
+        inject_audio_field(post_file, audio_public_path)
+        print(f"Injected audio field: {audio_public_path}")
 
 
 if __name__ == '__main__':
