@@ -142,12 +142,22 @@ jobs:
             AUDIO_ZH="static/audio/${BASENAME}.zh.mp3"
             AUDIO_EN="static/audio/${BASENAME}.en.mp3"
 
-            # --- 1. Summary (Cloudflare AI) ---
+            # --- 1a. Chinese Summary ---
             if [ "$FORCE" = "true" ] || ! grep -q '^summary:' "$POST_FILE"; then
-              echo "📝 Generating summary..."
+              echo "📝 Generating Chinese summary..."
               python3 scripts/generate_summary.py "$POST_FILE" zh
             else
-              echo "⏭️ Summary exists"
+              echo "⏭️ Chinese summary exists"
+            fi
+
+            # --- 1b. English Summary ---
+            if [ -f "$EN_FILE" ]; then
+              if [ "$FORCE" = "true" ] || ! grep -q '^summary:' "$EN_FILE"; then
+                echo "📝 Generating English summary..."
+                python3 scripts/generate_summary.py "$EN_FILE" en
+              else
+                echo "⏭️ English summary exists"
+              fi
             fi
 
             # --- 2. Cover (NVIDIA SD3) ---
