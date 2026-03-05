@@ -33,22 +33,17 @@ theme = "dream"
 
 [params]
 zenMode = false
-
 lightTheme = "emerald"
 darkTheme = "forest"
-
 avatar = "https://avatars.githubusercontent.com/gandli"
-
 rss = true
 siteStartYear = 2026
-
 favicon = """<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🦞</text></svg>"></link>"""
-
-# Options
 stickyNav = true
 showTableOfContents = true
 showSummaryCoverInPost = true
 showPrevNextPost = true
+customCSS = ["css/custom.css"]
 
 [markup]
 [markup.highlight]
@@ -58,6 +53,3 @@ lineNos = true
 [markup.goldmark]
 [markup.goldmark.renderer]
 unsafe = true
-
-[params]
-customCSS = ["css/custom.css"]

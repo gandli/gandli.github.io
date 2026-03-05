@@ -177,7 +177,7 @@ jobs:
             # --- 5. Insert cover into English file ---
             if [ -f "$EN_FILE" ] && [ -f "$COVER_JPG" ]; then
               echo "🖼️ Inserting cover into English file..."
-              sed -i '' "s|cover: .*|cover: /covers/${BASENAME}.jpg|" "$EN_FILE"
+              sed -i "s|cover: .*|cover: /covers/${BASENAME}.jpg|" "$EN_FILE"
             fi
 
             # --- 6. English Audio ---
